@@ -19,10 +19,11 @@ Route::get('/', function () {
 
 
 
-Auth::routes();
+Auth::routes(); 
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//profiles
+// Route::get('/create-profile', [App\Http\Controllers\ProfileController::class, 'create'] );
+Route::post('/profiles-store' ,[App\Http\Controllers\ProfileController::class, 'store'] ); 
+Route::resource('profiles', App\Http\Controllers\ProfileController::class);
