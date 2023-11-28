@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Auth::routes(); 
 
-
+// Standard routes had to include specific pofiles-store
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //profiles
 // Route::get('/create-profile', [App\Http\Controllers\ProfileController::class, 'create'] );

@@ -5,4 +5,8 @@
         <h1>F1 Registration App</h1>
         <p>UPDATE</p>
     </div>
-@endsection
+
+
+
+
+    @endsection

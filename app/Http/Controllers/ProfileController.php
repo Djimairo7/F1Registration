@@ -53,7 +53,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return view('profiles.show', compact('profile'));
     }
 
     /**
@@ -69,7 +69,15 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
-        //
+        $validatedData = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $profile->update($request->all());
+
+        return redirect()->route('profiles.index')->with('success', 'Profile updated successfully');
     }
 
     /**
@@ -77,6 +85,7 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $profile->delete();
+        return redirect()->route('profiles.index')->with('success', 'Profile deleted succesfully');
     }
 }

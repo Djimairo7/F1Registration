@@ -30,8 +30,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                   <!-- lists including routing of navbar names -->
                     <li class="nav-item">
                         <a href="{{ route ('profiles.index') }}" class="nav-link">Profiles</a>
+                
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route ('profiles.create') }}" class="nav-link">Create Profile</a>
+                
                     </li>
                     </ul>
 
