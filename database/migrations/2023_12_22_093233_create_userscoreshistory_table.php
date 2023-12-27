@@ -12,7 +12,9 @@ class CreateUserscoreshistoryTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('score');
-            $table->timestamps('action_time');
+            $table->timestamp('action_time');
+        
+
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
