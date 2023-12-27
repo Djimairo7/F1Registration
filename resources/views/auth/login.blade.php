@@ -20,20 +20,6 @@
                                 placeholder="Vul hier je email in">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="first_name class=text-white">
-                                Voornaam
-                            </label>
-                            <input type="text" name="first_name" class="form-control bg-secondary text-white"
-                                placeholder="Vul je voornaam in">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="last_name" class="text-white">
-                                Achternaam
-                            </label>
-                            <input type="text" id="last_name" name="last_name"
-                                class="form-control bg-secondary text-white" placeholder="Vul je Achternaam in">
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="password" class="text-white">
                                 Wachtwoord
                             </label>
