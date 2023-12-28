@@ -39,18 +39,22 @@
                             </label>
                             <input type="text" id="password" name="password"
                                 class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
-                        </div>
+                            <div class="container p-3 d-flex justify-content-center align-items-end">
+                                <a href="/login" class="text-danger font-weight-bold text-decoration-none">Heb je al een
+                                    account? log hier in</a>
 
+                            </div>
+
+                        </div>
+                        <button type="submit"
+                            class="btn btn-danger w-25 align-items-center d-flex justify-content-center mx-auto">
+                            opslaan
+                        </button>
+                    </form>
                 </div>
-                <button type="submit"
-                    class="btn btn-danger w-25 align-items-center d-flex justify-content-center mx-auto">
-                    opslaan
-                </button>
-                </form>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 

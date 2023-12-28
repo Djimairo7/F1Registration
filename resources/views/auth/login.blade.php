@@ -28,6 +28,7 @@
                             <div class="container p-3 d-flex justify-content-center align-items-end">
                                 <a href="/register" class="text-danger font-weight-bold text-decoration-none">Nog geen
                                     account? Registreer hier</a>
+
                             </div>
 
                         </div>
