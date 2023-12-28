@@ -6,6 +6,12 @@
         <div class="row justify-content-center">
             <div class="col-md-6 bg-black text-white rounded overflow-hidden">
                 <div class="p-3">
+                    <style>
+                        body {
+                            overflow: hidden;
+                        }
+                    </style>
+                    <script src="../../views/resources/js/login.js"></script>
 
 
                     <form action="" method="post" enctype="multipart/form-data" class="p-3">
@@ -28,16 +34,22 @@
                             <div class="container p-3 d-flex justify-content-center align-items-end">
                                 <a href="/register" class="text-danger font-weight-bold text-decoration-none">Nog geen
                                     account? Registreer hier</a>
+                            </div>
+                            <div class="container p-3 d-flex justify-content-center">
+                                <a href="/placeholder" class="text-danger font-weight-bold text-decoration-none">
+                                    Wachtwoord Vergeten?
 
+                                </a>
                             </div>
 
                         </div>
 
                 </div>
-                <button type="submit"
-                    class="btn btn-danger w-25 align-items-center d-flex justify-content-center mx-auto">
-                    opslaan
-                </button>
+                <div class="container p-3 d-flex justify-content-center mb-4 align-items-center">
+                    <button type="submit" class="btn btn-danger w-25">
+                        Login
+                    </button>
+                </div>
                 </form>
             </div>
         </div>
