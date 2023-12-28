@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Race;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // Retrieve all races from the database
+        $races = Race::all();
+
+        // Return the view with all races
+        return view('home', ['races' => $races]);
     }
 }
