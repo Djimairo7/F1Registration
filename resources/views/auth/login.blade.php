@@ -25,6 +25,11 @@
                             </label>
                             <input type="text" id="password" name="password"
                                 class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
+                            <div class="container p-3 d-flex justify-content-center align-items-end">
+                                <a href="/register" class="text-danger font-weight-bold text-decoration-none">Nog geen
+                                    account? Registreer hier</a>
+                            </div>
+
                         </div>
 
                 </div>
