@@ -11,9 +11,12 @@ class CreateUserscoreshistoryTable extends Migration
         Schema::create('userscoreshistory', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('score');
+            $table->integer('score_id');
             $table->timestamp('action_time');
-        
+            $table->timestamps();
+
+
+
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
