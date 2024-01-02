@@ -51,12 +51,13 @@
             <div class="card my-2 bg-black text-white">
                 <div class="card-header bg-red">
                     <h5 class="mb-0">
-                        <button class="btn text-white" onclick="toggleCollapse('currentRaceTable')" aria-expanded="true" aria-controls="currentRaceTable">
+                        <button class="btn w-100 text-left text-white" onclick="toggleCollapse('currentRaceTable')" aria-expanded="true" aria-controls="currentRaceTable">
                             Huidige race
                         </button>
                     </h5>
                 </div>
 
+                //! need to change the text align to left with bootstrap but not sure how
                 <div id="currentRaceTable" class="collapse show">
                     <div class="card-body d-flex flex-column">
                         @foreach ($races as $race)
@@ -72,7 +73,7 @@
             <div class="card my-2 bg-black text-white">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <button class="btn text-white" onclick="toggleCollapse('previousRaceTable')" aria-expanded="false" aria-controls="previousRaceTable">
+                        <button class="btn w-100 text-left text-white" onclick="toggleCollapse('previousRaceTable')" aria-expanded="false" aria-controls="previousRaceTable">
                             Eerdere races
                         </button>
                     </h5>
@@ -93,7 +94,7 @@
             <div class="card my-2 bg-black text-white">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <button class="btn text-white" onclick="toggleCollapse('futureRaceTable')" aria-expanded="false" aria-controls="futureRaceTable">
+                        <button class="btn w-100 text-sm-left text-white" onclick="toggleCollapse('futureRaceTable')" aria-expanded="false" aria-controls="futureRaceTable">
                             Toekomstige races
                         </button>
                     </h5>
