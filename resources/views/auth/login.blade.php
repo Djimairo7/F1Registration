@@ -21,24 +21,18 @@
                                 Wachtwoord
                             </label>
                             <input type="text" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
+                            <button type="submit" class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
+                                Login
+                            </button>
                             <div class="container p-3 d-flex justify-content-center align-items-end">
                                 <a href="/register" class="text-white font-weight-bold text-decoration-none">Nog geen
                                     account? Registreer hier</a>
                             </div>
-                            <div class="container p-3 d-flex justify-content-center">
-                                <a href="/placeholder" class="text-white font-weight-bold text-decoration-none">
-                                    Wachtwoord Vergeten?
+                            <a href="/reset-password" class=" d-flex justify-content-center text-white font-weight-bold text-decoration-none">
+                                Wachtwoord Vergeten?
 
-                                </a>
-                            </div>
-
+                            </a>
                         </div>
-
-                </div>
-                <div class="container p-3 d-flex justify-content-center mb-4 align-items-center">
-                    <button type="submit" class="btn btn-danger w-25">
-                        Login
-                    </button>
                 </div>
                 </form>
             </div>
