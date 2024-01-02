@@ -4,7 +4,7 @@
 
 
 
-<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+<div class="d-flex flex-column justify-content-center align-items-center">
     <div class="container p-3">
         <div class="row justify-content-center">
             <div class="col-md-12 bg-secondary text-white rounded overflow-hidden">
