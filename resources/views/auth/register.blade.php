@@ -10,25 +10,25 @@
 
                     <body>
 
-                        <form action="" method="post" enctype="multipart/form-data" class="p-3">
+                        <form action="{{ route('register') }}" method="post" enctype="multipart/form-data" class="p-3">
                             @csrf
                             <div class="form-group mb-3">
-                                <label for="username class=text-white">
+                                <label for="name class=form-label">
                                     Gebruikersnaam
                                 </label>
-                                <input type="text" name="username" class="form-control bg-secondary text-white" placeholder="Vul hier je gebruikersnaam in">
+                                <input type="text" name="name" class="form-control bg-secondary text-white" id="name" placeholder="Vul hier je gebruikersnaam in" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="email" class="text-white">
+                                <label for="email" class="form-label text-white">
                                     Email
                                 </label>
-                                <input type="text" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in">
+                                <input type="email" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="password" class="text-white">
+                                <label for="password" class=" form-label">
                                     Wachtwoord
                                 </label>
-                                <input type="text" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul hier je wachtwoord in">
+                                <input type="password" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul hier je wachtwoord in" required>
                                 <button type="submit" class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
                                     Registreer
                                 </button>
