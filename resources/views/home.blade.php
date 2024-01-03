@@ -85,6 +85,8 @@
                         <a href="#" class="btn bg-gray my-1 d-flex flex-row">
                             <p class="my-1 mx-2">{{ $race->name }}</p>
                             <p class="my-1 mx-2">{{ $race->location }}</p>
+                            <!-- <p class="my-1 mx-2">{{ $race[circuit_short_name] }}</p>
+                            <p class="my-1 mx-2">{{ $race[location] }}</p> -->
                         </a>
                         @endforeach
                     </div>
