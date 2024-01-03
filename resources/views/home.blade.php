@@ -102,6 +102,29 @@
                     </div>
                 </div>
 
+
+                {{-- <div class="card my-2 bg-black text-white">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <button class="btn w-100 text-sm-left text-white" onclick="toggleCollapse('futureRaceTable')"
+                                aria-expanded="false" aria-controls="futureRaceTable">
+                                Toekomstige races
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="futureRaceTable" class="collapse">
+                        <div class="card-body d-flex flex-column">
+                            @foreach ($races as $race)
+                                <a href="#" class="btn bg-gray my-1 d-flex flex-row">
+                                    <p class="my-1 mx-2">{{ $race->name }}</p>
+                                    <p class="my-1 mx-2">{{ $race->location }}</p>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div> --}}
+
                 <div class="card my-2 bg-black text-white">
                     <div class="card-header">
                         <h5 class="mb-0">
@@ -112,7 +135,7 @@
                         </h5>
                     </div>
 
-                    <div id="currentRaceTable" class="collapse show">
+                    <div id="previousRaceTable" class="collapse">
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
                                 @foreach ($races as $race)
@@ -140,7 +163,7 @@
                         </h5>
                     </div>
 
-                    <div id="currentRaceTable" class="collapse show">
+                    <div id="futureRaceTable" class="collapse">
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
                                 @foreach ($races as $race)
