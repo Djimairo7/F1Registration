@@ -88,11 +88,12 @@
                                 @endforeach
 
                                 @if ($currentRace)
-                                    <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
+                                    <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
                                         <p class="my-1 mx-2">{{ $currentRace['location'] }}</p>
                                         <p class="my-1 mx-2">{{ $currentRace['meeting_name'] }}</p>
                                         <p class="my-1 mx-2">{{ $currentRace['country_name'] }}</p>
                                         <p class="my-1 mx-2">{{ $currentRace['date_start'] }}</p>
+                                        <span class="d-flex align-items-center">&#x25B6;</span>
                                     </a>
                                 @else
                                     <p>No race is scheduled currently.</p>
@@ -146,11 +147,12 @@
                                     @endphp
 
                                     @if ($raceStartDate->lt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
                                             <p class="my-1 mx-2">{{ $race['location'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                            <span class="d-flex align-items-center">&#x25B6;</span>
                                         </a>
                                     @endif
                                 @endforeach
@@ -180,11 +182,12 @@
                                     @endphp
 
                                     @if ($raceStartDate->gt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
                                             <p class="my-1 mx-2">{{ $race['location'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                            <span class="d-flex align-items-center">&#x25B6;</span>
                                         </a>
                                     @endif
                                 @endforeach
@@ -208,9 +211,9 @@
         }
 
         /* .bg-red {
-                                background-color: rgb(255, 0, 0);
-                                color: black;
-                            } */
+                                                                                                            background-color: rgb(255, 0, 0);
+                                                                                                            color: black;
+                                                                                                        } */
     </style>
 
     <script>
