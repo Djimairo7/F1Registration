@@ -59,13 +59,15 @@
                             </button>
                         </h5>
                     </div>
+                    @php
+                        $currentDate = \Carbon\Carbon::parse('2023-09-22T02:30:00+00:00'); //set current date
+                        // $currentRace = now(); // set back to the current date
+                    @endphp
 
                     <div id="currentRaceTable" class="collapse show">
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
                                 @php
-                                    $currentDate = \Carbon\Carbon::parse('2023-09-22T02:30:00+00:00'); //set current date
-                                    // $currentRace = now(); // set back to the current date
                                     $currentRace = null; //set the current race to null for fallback
                                 @endphp
 
@@ -139,12 +141,18 @@
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
                                 @foreach ($races as $race)
-                                    <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
-                                        <p class="my-1 mx-2">{{ $race['location'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
-                                    </a>
+                                    @php
+                                        $raceStartDate = \Carbon\Carbon::parse($race['date_start']);
+                                    @endphp
+
+                                    @if ($raceStartDate->lt($currentDate))
+                                        <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                                            <p class="my-1 mx-2">{{ $race['location'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                        </a>
+                                    @endif
                                 @endforeach
                             @else
                                 <p>No races found.</p>
@@ -167,12 +175,18 @@
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
                                 @foreach ($races as $race)
-                                    <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
-                                        <p class="my-1 mx-2">{{ $race['location'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
-                                    </a>
+                                    @php
+                                        $raceStartDate = \Carbon\Carbon::parse($race['date_start']);
+                                    @endphp
+
+                                    @if ($raceStartDate->gt($currentDate))
+                                        <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                                            <p class="my-1 mx-2">{{ $race['location'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                        </a>
+                                    @endif
                                 @endforeach
                             @else
                                 <p>No races found.</p>
