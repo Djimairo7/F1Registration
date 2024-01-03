@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container bg-gray">
+    <div class="container bg-secondary">
         <div class="row">
             {{-- <div class="col-md-4">
                 <div class="card">
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card my-2 bg-black text-white">
-                    <div class="card-header bg-red">
+                    <div class="card-header bg-danger">
                         <h5 class="mb-0">
                             <button class="btn w-100 text-left text-white" onclick="toggleCollapse('currentRaceTable')"
                                 aria-expanded="true" aria-controls="currentRaceTable">
@@ -88,7 +88,7 @@
                                 @endforeach
 
                                 @if ($currentRace)
-                                    <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                                    <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
                                         <p class="my-1 mx-2">{{ $currentRace['location'] }}</p>
                                         <p class="my-1 mx-2">{{ $currentRace['meeting_name'] }}</p>
                                         <p class="my-1 mx-2">{{ $currentRace['country_name'] }}</p>
@@ -118,7 +118,7 @@
                     <div id="futureRaceTable" class="collapse">
                         <div class="card-body d-flex flex-column">
                             @foreach ($races as $race)
-                                <a href="#" class="btn bg-gray my-1 d-flex flex-row">
+                                <a href="#" class="btn bg-secondary my-1 d-flex flex-row">
                                     <p class="my-1 mx-2">{{ $race->name }}</p>
                                     <p class="my-1 mx-2">{{ $race->location }}</p>
                                 </a>
@@ -146,7 +146,7 @@
                                     @endphp
 
                                     @if ($raceStartDate->lt($currentDate))
-                                        <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
                                             <p class="my-1 mx-2">{{ $race['location'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
@@ -180,7 +180,7 @@
                                     @endphp
 
                                     @if ($raceStartDate->gt($currentDate))
-                                        <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
                                             <p class="my-1 mx-2">{{ $race['location'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
@@ -207,22 +207,10 @@
             display: block;
         }
 
-        .bg-light-gray {
-            background-color: rgb(238, 238, 238)
-        }
-
-        .bg-gray {
-            background-color: rgb(117, 117, 117);
-        }
-
-        .bg-dark-gray {
-            background-color: rgb(38, 38, 38);
-        }
-
-        .bg-red {
-            background-color: rgb(255, 0, 0);
-            color: black;
-        }
+        /* .bg-red {
+                                background-color: rgb(255, 0, 0);
+                                color: black;
+                            } */
     </style>
 
     <script>
@@ -235,14 +223,14 @@
             for (var i = 0; i < allTables.length; i++) {
                 if (allTables[i].id !== tableId) {
                     allTables[i].style.display = 'none';
-                    allTables[i].previousElementSibling.classList.remove('bg-red');
+                    allTables[i].previousElementSibling.classList.remove('bg-danger');
                 }
             }
 
             // Toggle the selected table
             raceTable.style.display = (raceTable.style.display === 'none' || raceTable.style.display === '') ? 'block' :
                 'none';
-            cardHeader.classList.toggle('bg-red');
+            cardHeader.classList.toggle('bg-danger');
         }
     </script>
 
