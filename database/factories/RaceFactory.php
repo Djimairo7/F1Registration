@@ -19,7 +19,7 @@ class RaceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(4, true),
+            'name' => fake()->sentence(rand(2, 4), true),
             'location' => fake()->city(),
         ];
     }
