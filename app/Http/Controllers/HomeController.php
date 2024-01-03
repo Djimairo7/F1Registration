@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Race;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
+use Illuminate\Support\Facades\Http; // Import the Http facade
 class HomeController extends Controller
 {
     /**
@@ -26,13 +27,15 @@ class HomeController extends Controller
     {
 
         // Retrieve all races from the database
-        $races = Race::all();
+        // $races = Race::all();
 
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
         $fullName = $user->name;
         $username = $user->username;
         $pointCount = $user->point_count;
 
+        $response = Http::withoutVerifying()->get('https://api.openf1.org/v1/meetings'); // Make an HTTP GET request
+        $races = $response->json(); // Retrieve the JSON response
 
         // Return the view with all races
         return view('home', compact('fullName', 'username', 'pointCount'), ['races' => $races]);
