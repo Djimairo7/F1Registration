@@ -60,12 +60,17 @@
                 //! need to change the text align to left with bootstrap but not sure how
                 <div id="currentRaceTable" class="collapse show">
                     <div class="card-body d-flex flex-column">
+                        @if (!empty($races))
                         @foreach ($races as $race)
-                        <a href="#" class="btn bg-gray my-1 d-flex flex-row">
-                            <p class="my-1 mx-2">{{ $race->name }}</p>
-                            <p class="my-1 mx-2">{{ $race->location }}</p>
+                        <a href="#" class="btn bg-gray my-1 mx-2 d-flex flex-row">
+                            <p class="my-1 mx-2">{{ $race['location'] }}</p>
+                            <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
+                            <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
                         </a>
                         @endforeach
+                        @else
+                        <p>No races found.</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -83,10 +88,6 @@
                     <div class="card-body d-flex flex-column">
                         @foreach ($races as $race)
                         <a href="#" class="btn bg-gray my-1 d-flex flex-row">
-                            <p class="my-1 mx-2">{{ $race->name }}</p>
-                            <p class="my-1 mx-2">{{ $race->location }}</p>
-                            <!-- <p class="my-1 mx-2">{{ $race[circuit_short_name] }}</p>
-                            <p class="my-1 mx-2">{{ $race[location] }}</p> -->
                         </a>
                         @endforeach
                     </div>
@@ -106,8 +107,6 @@
                     <div class="card-body d-flex flex-column">
                         @foreach ($races as $race)
                         <a href="#" class="btn bg-gray my-1 d-flex flex-row">
-                            <p class="my-1 mx-2">{{ $race->name }}</p>
-                            <p class="my-1 mx-2">{{ $race->location }}</p>
                         </a>
                         @endforeach
                     </div>
