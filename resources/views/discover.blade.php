@@ -45,6 +45,8 @@
                             </form>
                             <div class="search-results">
                                 <!-- Display search results here -->
+                                <!-- idk how yet -->
+                                <!-- TODO: display search results -->
                             </div>
                         </div>
                     </div>
