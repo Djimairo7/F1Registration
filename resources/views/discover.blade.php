@@ -28,6 +28,12 @@
                             <div class="card-header">{{ __('Second Card') }}</div>
                             <div class="card-body">
                                 <!-- Content for the second card -->
+                                <h4>Notifications</h4>
+                                <ul>
+                                    @foreach ($user->notifications as $notification)
+                                        <li>{{ $notification->message }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -55,7 +61,8 @@
                                                 </option>
                                                 <option value="created_at" {{ $sort === 'created_at' ? 'selected' : '' }}>
                                                     Date Created</option>
-                                                <option value="point_count" {{ $sort === 'point_count' ? 'selected' : '' }}>
+                                                <option value="point_count"
+                                                    {{ $sort === 'point_count' ? 'selected' : '' }}>
                                                     Point Count</option>
                                                 <!-- Add more sorting options as needed -->
                                             </select>

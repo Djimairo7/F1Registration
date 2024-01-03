@@ -26,6 +26,6 @@ class DiscoverController extends Controller
 
         $allUsers = User::all(); // Retrieve all users
 
-        return view('discover', compact('fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+        return view('discover', compact('user', 'fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
     }
 }
