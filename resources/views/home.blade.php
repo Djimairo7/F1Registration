@@ -20,7 +20,7 @@
             </div> --}}
 
             <div class="col-md-4">
-                <div class="d-flex flex-wrap flex-md-column m-2">
+                <div class="d-flex flex-wrap flex-md-column m-2 sticky-top">
                     <div class="col-8 col-md-12 mb-2">
                         <div class="card bg-black text-white p-2">
                             <div class="card-header">{{ __('First Card') }}</div>
