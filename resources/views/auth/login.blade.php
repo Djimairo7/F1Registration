@@ -7,20 +7,20 @@
             <div class="col-md-6 bg-dark text-white rounded overflow-hidden">
                 <div class="p-3">
                     <h1 class="text-danger text-center">Login</h1>
-                    <form action="" method="post" enctype="multipart/form-data" class="p-3">
+                    <form action="{{ route('login') }}" method="post" enctype="multipart/form-data" class="p-3">
                         @csrf
 
                         <div class="form-group mb-3">
                             <label for="email" class="text-white">
                                 Email
                             </label>
-                            <input type="text" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in">
+                            <input type="email" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in">
                         </div>
                         <div class="form-group mb-3">
                             <label for="password" class="text-white">
                                 Wachtwoord
                             </label>
-                            <input type="text" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
+                            <input type="password" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
                             <button type="submit" class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
                                 Login
                             </button>
