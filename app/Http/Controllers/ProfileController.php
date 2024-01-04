@@ -25,7 +25,7 @@ class ProfileController extends Controller
         }
 
         // Return the profile create view
-        return view('profile.create', compact($profile));
+        return view('profile.create', compact('profile'));
     }
 
     public function store(Request $request)
@@ -59,6 +59,40 @@ class ProfileController extends Controller
         $profile = Profile::create($validatedData);
 
         // Redirect to a desired route (e.g., profile index) with a success message
-        return redirect()->route('home')->with('success', 'Profile created successfully!');
+        return redirect()->route('home')->with('success', 'Profiel succesvol aangemaakt!');
+    }
+
+    public function update(Request $request){
+        $user = Auth::user();
+
+        // Validate the request data including the image
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'bio' => 'nullable',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Handle profile picture upload
+        if ($request->hasFile('profile_picture')) {
+            // Store the file in the public storage and get the path
+            $filePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+            // Add the file path to the validated data
+            $validatedData['profile_picture'] = $filePath;
+        }
+
+        // Create a new profile instance and save the validated data
+        $profile = $user->profile;
+
+        if ($profile){
+            $profile->update($validatedData);
+
+            // Redirect to a desired route (e.g., profile index) with a success message
+            return redirect()->route('home')->with('success', 'Profiel succesvol ge-update!');
+        }
+        else {
+            throw new NotFoundHttpException('Het profiel is niet gevonden. :(');
+        }
+
     }
 }
