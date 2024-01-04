@@ -86,20 +86,17 @@
                                     @if ($currentDate->between($raceStartDate, $raceEndDate))
                                         @php
                                             //check the race start and the race end date to see if the current date is in between them
-                                            $currentRace = $race;
+                                            $currentRace = $race; //set the current race to the race that currently going on
                                             break;
                                         @endphp
                                     @endif
                                 @endforeach
 
                                 @if ($currentRace)
-                                    <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
-                                        <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['locality'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['Circuit']['circuitName'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['country'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['date'] }}</p>
-                                        <span class="d-flex align-items-center">&#x25B6;</span>
-                                    </a>
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['locality'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['circuitName'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['country'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['date'] }}</p>
                                 @else
                                     <p>No race is scheduled currently.</p>
                                 @endif
@@ -216,9 +213,9 @@
         }
 
         /* .bg-red {
-                                                                                                                                                                                                                                            background-color: rgb(255, 0, 0);
-                                                                                                                                                                                                                                            color: black;
-                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                    background-color: rgb(255, 0, 0);
+                                                                                                                                                                                                                                                    color: black;
+                                                                                                                                                                                                                                                } */
     </style>
 
     <script>
