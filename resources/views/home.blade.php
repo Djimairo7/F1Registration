@@ -62,11 +62,22 @@
                                         alt="Profile Picture" class="img-fluid rounded-circle"
                                         style="width: 150px; height: 150px;">
                                 </div>
-                                <h5 class="card-title">{{ $fullName }}</h5>
-                                <p class="card-text">@JohnDoe60</p>
-                                <!-- <p class="card-text">Username: {{ $username }}</p> -->
-                                <p class="card-text">Point Count: 54</p>
-                                <!-- <p class="card-text">Point Count: {{ $pointCount }}</p> -->
+                                <div class="col-md-8">
+                                    <h5 class="card-title">{{ $fullName }}</h5>
+                                    <p class="card-text">@JohnDoe60</p>
+                                    <!-- <p class="card-text">Username: {{ $username }}</p> -->
+                                    <p class="card-text">Point Count: 54</p>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-between">
+                                    <div class="col-auto">
+                                        <p class="m-0">{{ $currentRace['Circuit']['circuitName'] }}</p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p class="m-0">Tijd: 1.23.456</p>
+                                    </div>
+                                </div>
+                                <hr>
                                 <a href="#" class="btn btn-danger">Edit Profile</a>
                             </div>
                         </div>
@@ -191,12 +202,13 @@
                                     @endphp
 
                                     @if ($raceStartDate->lt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
+                                        <a href="#"
+                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['date'] }}</p>
-                                            <span class="d-flex align-items-center">&#x25B6;</span>
+                                            <i class="fas fa-chevron-right ml-2"></i>
                                         </a>
                                     @endif
                                 @endforeach
@@ -227,15 +239,15 @@
                                     @php
                                         $raceStartDate = \Carbon\Carbon::parse($race['date']);
                                     @endphp
-
+                                    {{-- //TODO: align these better --}}
                                     @if ($raceStartDate->gt($currentDate))
                                         <a href="#"
-                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
+                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['date'] }}</p>
-                                            <span class="d-flex align-items-center">&#x25B6;</span>
+                                            <i class="fas fa-chevron-right ml-2"></i>
                                         </a>
                                     @endif
                                 @endforeach
