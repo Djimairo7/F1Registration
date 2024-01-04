@@ -30,5 +30,9 @@ Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'create'
 Route::post('/profile', [\App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store')
     ->middleware('auth');
 
-Route::post('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update')
+Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update')
+    ->middleware('auth');
+
+//route voor de profile view
+Route::get('/profile/{username}', [\App\Http\Controllers\ProfileController::class, 'view'])->name('profile.view')
     ->middleware('auth');

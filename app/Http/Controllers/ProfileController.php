@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\User;
+use http\Message;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +61,7 @@ class ProfileController extends Controller
         $profile = Profile::create($validatedData);
 
         // Redirect to a desired route (e.g., profile index) with a success message
-        return redirect()->route('home')->with('success', 'Profiel succesvol aangemaakt!');
+        return redirect()->route('profile.view', ['username' => $user->username])->with('success', 'Profiel succesvol aangemaakt!');
     }
 
     public function update(Request $request){
@@ -88,11 +90,25 @@ class ProfileController extends Controller
             $profile->update($validatedData);
 
             // Redirect to a desired route (e.g., profile index) with a success message
-            return redirect()->route('home')->with('success', 'Profiel succesvol ge-update!');
+            return redirect()->route('profile.view', ['username' => $user->username])->with('success', 'Profiel succesvol ge-update!');
         }
         else {
             throw new NotFoundHttpException('Het profiel is niet gevonden. :(');
         }
 
+    }
+    public function view($username){
+        $user = User::where('username', $username)->first();
+
+        if (!$user){
+            throw new NotFoundHttpException('Gebruiker kan niet gevonden worden.');
+        }
+        $profile = $user->profile;
+
+        if (!$profile){
+            throw new NotFoundHttpException('Profiel kan niet gevonden worden.');
+        }
+
+        return view('profile.view', compact('profile'));
     }
 }
