@@ -1,6 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @php
+        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
+        // $currentDate = now(); // set back to the current date
+
+        if (isset($getRaces['MRData']['RaceTable']['Races'])) {
+            $races = $getRaces['MRData']['RaceTable']['Races']; //go through the list of data to get to the first entry
+        }
+    @endphp
+
+    @if (!empty($races))
+        @php
+            $currentRace = null; //set the current race to null for fallback
+        @endphp
+
+        @foreach ($races as $key => $race)
+            @php
+                // go through each entry of the json list
+                $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
+                $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
+            @endphp
+
+            @if ($currentDate->between($raceStartDate, $raceEndDate))
+                @php
+                    //check the race start and the race end date to see if the current date is in between them
+                    $currentRace = $race; //set the current race to the race that currently going on
+                    break;
+                @endphp
+            @endif
+        @endforeach
+    @endif
+
     <div class="container bg-secondary">
         <div class="row">
             {{-- <div class="col-md-4">
@@ -55,50 +87,51 @@
                         <h5 class="mb-0">
                             <button class="btn w-100 text-left text-white" onclick="toggleCollapse('currentRaceTable')"
                                 aria-expanded="true" aria-controls="currentRaceTable">
-                                Huidige race
+                                Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
                             </button>
                         </h5>
                     </div>
-                    @php
-                        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
-                        // $currentDate = now(); // set back to the current date
 
-                        if (isset($getRaces['MRData']['RaceTable']['Races'])) {
-                            $races = $getRaces['MRData']['RaceTable']['Races']; //go through the list of data to get to the first entry
-                        }
-                    @endphp
 
 
                     <div id="currentRaceTable" class="collapse show">
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
-                                @php
-                                    $currentRace = null; //set the current race to null for fallback
-                                @endphp
-
-                                @foreach ($races as $key => $race)
-                                    @php
-                                        // go through each entry of the json list
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
-                                        $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
-                                    @endphp
-
-                                    @if ($currentDate->between($raceStartDate, $raceEndDate))
-                                        @php
-                                            //check the race start and the race end date to see if the current date is in between them
-                                            $currentRace = $race; //set the current race to the race that currently going on
-                                            break;
-                                        @endphp
-                                    @endif
-                                @endforeach
-
                                 @if ($currentRace)
-                                    <img src="{{ $raceImages[Str::slug($race['Circuit']['Location']['country'])] }}"
-                                        alt="{{ $race['Circuit']['Location']['country'] }} Preview">
-                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['locality'] }}</p>
-                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['circuitName'] }}</p>
-                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['country'] }}</p>
-                                    <p class="my-1 mx-2">{{ $currentRace['date'] }}</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <img src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
+                                                    alt="{{ $currentRace['Circuit']['Location']['country'] }} Preview"
+                                                    class="img-fluid">
+                                                <p class="my-0">{{ $currentRace['Circuit']['circuitName'] }},
+                                                    {{ $currentRace['Circuit']['Location']['country'] }}</p>
+                                                <p class="my-0">{{ $currentRace['date'] }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                            <form class="text-center" method="POST" action="#">
+                                                @csrf
+                                                <h2 class="mb-4">Tijd Toevoegen</h2>
+                                                <div class="form-group">
+                                                    <input type="text"
+                                                        class="form-control form-control-lg bg-secondary text-white border-0 text-center"
+                                                        placeholder="Gereden Tijd" name="Time">
+                                                </div>
+                                                <div class="form-group mt-3">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="UplRaceImg"
+                                                            name="UplRaceImg" hidden>
+                                                        <label
+                                                            class="custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
+                                                            for="UplRaceImg">Upload Image</label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 @else
                                     <p>No race is scheduled currently.</p>
                                 @endif
@@ -204,21 +237,6 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .collapse {
-            display: none;
-        }
-
-        .collapse.show {
-            display: block;
-        }
-
-        /* .bg-red {
-                                                                                                                                                                                                                                                                                        background-color: rgb(255, 0, 0);
-                                                                                                                                                                                                                                                                                        color: black;
-                                                                                                                                                                                                                                                                                    } */
-    </style>
 
     <script>
         function toggleCollapse(tableId) {
