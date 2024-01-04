@@ -60,8 +60,8 @@
                         </h5>
                     </div>
                     @php
-                        $currentDate = \Carbon\Carbon::parse('2024-03-22'); //set current date
-                        // $currentRace = now(); // set back to the current date
+                        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
+                        // $currentDate = now(); // set back to the current date
 
                         if (isset($getRaces['MRData']['RaceTable']['Races'])) {
                             $races = $getRaces['MRData']['RaceTable']['Races']; //go through the list of data to get to the first entry
@@ -93,6 +93,8 @@
                                 @endforeach
 
                                 @if ($currentRace)
+                                    <img src="{{ $raceImages[Str::slug($race['Circuit']['Location']['country'])] }}"
+                                        alt="{{ $race['Circuit']['Location']['country'] }} Preview">
                                     <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['locality'] }}</p>
                                     <p class="my-1 mx-2">{{ $currentRace['Circuit']['circuitName'] }}</p>
                                     <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['country'] }}</p>
@@ -213,9 +215,9 @@
         }
 
         /* .bg-red {
-                                                                                                                                                                                                                                                    background-color: rgb(255, 0, 0);
-                                                                                                                                                                                                                                                    color: black;
-                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                        background-color: rgb(255, 0, 0);
+                                                                                                                                                                                                                                                                                        color: black;
+                                                                                                                                                                                                                                                                                    } */
     </style>
 
     <script>
