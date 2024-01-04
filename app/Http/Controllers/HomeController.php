@@ -34,10 +34,15 @@ class HomeController extends Controller
         $username = $user->username;
         $pointCount = $user->point_count;
 
-        $response = Http::withoutVerifying()->get('https://api.openf1.org/v1/meetings'); // Make an HTTP GET request
-        $races = $response->json(); // Retrieve the JSON response
+        $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
+        $getRaces = $racesreq->json();
+
+        $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
+        $getDrivers = $driversreq->json();
+
+        // dd($getRaces, $getDrivers);
 
         // Return the view with all races
-        return view('home', compact('fullName', 'username', 'pointCount'), ['races' => $races]);
+        return view('home', compact('fullName', 'username', 'pointCount', 'getRaces', 'getDrivers'));
     }
 }

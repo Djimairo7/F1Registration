@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Race;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
 use App\Models\User; // Import the User model class
+use App\Models\Notification; // Import the Notification model class
+use Illuminate\Support\Facades\DB; // Import the DB facade
+
 class DiscoverController extends Controller
 {
     public function index(Request $request)
@@ -26,6 +28,22 @@ class DiscoverController extends Controller
 
         $allUsers = User::all(); // Retrieve all users
 
-        return view('discover', compact('user', 'fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+        //TODO: Fix notifications
+        //*
+        // Create a new notification for the logged-in user
+        $notification = [
+            'user_id' => $user->id,
+            'message' => 'This is a test notification.',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        Notification::insert($notification);
+        //*
+
+        // Retrieve notifications of the current user
+        $notifications = Notification::where('user_id', $user->id)->get();
+
+        return view('discover', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
     }
 }

@@ -30,7 +30,7 @@
                                 <!-- Content for the second card -->
                                 <h4>Notifications</h4>
                                 <ul>
-                                    @foreach ($user->notifications as $notification)
+                                    @foreach ($notifications as $notification)
                                         <li>{{ $notification->message }}</li>
                                     @endforeach
                                 </ul>
