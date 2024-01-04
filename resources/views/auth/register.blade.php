@@ -21,11 +21,11 @@
                             <form action="/register" method="post" enctype="multipart/form-data" class="p-3">
                                 @csrf
                                 <div class="form-group mb-3">
-                                    <label for="name class=form-label">
+                                    <label for="username class=form-label">
                                         Gebruikersnaam
                                     </label>
-                                    <input value="{{ old('name') }}" type="name" name="name" id="name" class="form-control bg-secondary text-white" placeholder="Vul hier je gebruikersnaam in" required>
-                                    @error('name')
+                                    <input value="{{ old('username') }}" type="username" name="username" id="username" class="form-control bg-secondary text-white" placeholder="Vul hier je gebruikersnaam in" required>
+                                    @error('username')
                                     <p class="text-danger">{{ $message}}</p>
 
                                     @enderror
