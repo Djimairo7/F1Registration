@@ -14,27 +14,42 @@
                             <label for="email" class="text-white">
                                 Email
                             </label>
-                            <input type="email" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in">
+                            <input value="{{ old('email') }}" type="email" name="email" class="form-control bg-secondary text-white" placeholder="Vul hier je email in" required>
+                            @error('email')
+                            <p class="text-danger">{{ $message}}</p>
+
+                            @enderror
                         </div>
                         <div class="form-group mb-3">
                             <label for="password" class="text-white">
                                 Wachtwoord
                             </label>
-                            <input type="password" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in">
+                            <input type="password" id="password" name="password" class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in" required>
+                        </div>
+                        <div>
                             <button type="submit" class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
                                 Login
                             </button>
-                            <div class="container p-3 d-flex justify-content-center align-items-end">
-                                <a href="/register" class="text-white font-weight-bold text-decoration-none">Nog geen
-                                    account? Registreer hier</a>
-                            </div>
-                            <a href="/reset-password" class=" d-flex justify-content-center text-white font-weight-bold text-decoration-none">
-                                Wachtwoord Vergeten?
-
-                            </a>
                         </div>
+                        <div class="container p-3 d-flex justify-content-center align-items-end">
+                            <a href="/register" class="text-white font-weight-bold text-decoration-none">Nog geen
+                                account? Registreer hier</a>
+                        </div>
+                        <a href="/reset-password" class=" d-flex justify-content-center text-white font-weight-bold text-decoration-none">
+                            Wachtwoord Vergeten?
+
+                        </a>
+                    </form>
+                    @if ($errors->any())
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li class="text-danger">{{ $error }}</li>
+
+                        @endforeach
+                    </ul>
+                    @endif
                 </div>
-                </form>
+
             </div>
         </div>
     </div>
