@@ -85,9 +85,13 @@
                 <div class="card my-2 bg-black text-white">
                     <div class="card-header bg-danger">
                         <h5 class="mb-0">
-                            <button class="btn w-100 text-left text-white" onclick="toggleCollapse('currentRaceTable')"
-                                aria-expanded="true" aria-controls="currentRaceTable">
-                                Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
+                            <button
+                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                                onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
+                                aria-controls="currentRaceTable">
+                                <p class="mb-0 align-self-center">Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
+                                </p>
+                                <i id="currentRaceTableIcon" class="fas fa-chevron-up ml-2"></i>
                             </button>
                         </h5>
                     </div>
@@ -168,9 +172,12 @@
                 <div class="card my-2 bg-black text-white">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <button class="btn w-100 text-left text-white" onclick="toggleCollapse('previousRaceTable')"
-                                aria-expanded="false" aria-controls="previousRaceTable">
-                                Eerdere races
+                            <button
+                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                                onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
+                                aria-controls="futureRaceTable">
+                                <p class="mb-0 align-self-center">Eerdere races</p>
+                                <i id="previousRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
                             </button>
                         </h5>
                     </div>
@@ -203,9 +210,12 @@
                 <div class="card my-2 bg-black text-white">
                     <div class="card-header">
                         <h5 class="mb-0">
-                            <button class="btn w-100 text-sm-left text-white" onclick="toggleCollapse('futureRaceTable')"
-                                aria-expanded="false" aria-controls="futureRaceTable">
-                                Toekomstige races
+                            <button
+                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                                onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
+                                aria-controls="futureRaceTable">
+                                <p class="mb-0 align-self-center">Toekomstige races</p>
+                                <i id="futureRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
                             </button>
                         </h5>
                     </div>
@@ -219,7 +229,8 @@
                                     @endphp
 
                                     @if ($raceStartDate->gt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
+                                        <a href="#"
+                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
@@ -239,23 +250,33 @@
     </div>
 
     <script>
-        function toggleCollapse(tableId) {
+        function toggleCollapse(tableId, iconId) {
             var raceTable = document.getElementById(tableId);
             var cardHeader = raceTable.previousElementSibling;
+            var icon = document.getElementById(iconId);
+
+            // Add the classes
+            cardHeader.classList.add('bg-danger');
+            icon.classList.add('fa-chevron-up');
+
+            // Open the selected table
+            if (cardHeader.classList.contains('bg-danger')) {
+                raceTable.style.display = 'block';
+            }
 
             // Close all other tables
             var allTables = document.getElementsByClassName('collapse');
+            var allIcons = document.querySelectorAll('i.fas');
             for (var i = 0; i < allTables.length; i++) {
                 if (allTables[i].id !== tableId) {
                     allTables[i].style.display = 'none';
                     allTables[i].previousElementSibling.classList.remove('bg-danger');
                 }
+                if (allIcons[i].id !== iconId) {
+                    allIcons[i].classList.add('fa-chevron-down');
+                    allIcons[i].classList.remove('fa-chevron-up');
+                }
             }
-
-            // Toggle the selected table
-            raceTable.style.display = (raceTable.style.display === 'none' || raceTable.style.display === '') ? 'block' :
-                'none';
-            cardHeader.classList.toggle('bg-danger');
         }
     </script>
 
