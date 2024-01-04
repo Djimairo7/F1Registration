@@ -60,9 +60,14 @@
                         </h5>
                     </div>
                     @php
-                        $currentDate = \Carbon\Carbon::parse('2023-09-22T02:30:00+00:00'); //set current date
-                        // $currentRace = now(); // set back to the current date
+                        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
+                        // $currentDate = now(); // set back to the current date
+
+                        if (isset($getRaces['MRData']['RaceTable']['Races'])) {
+                            $races = $getRaces['MRData']['RaceTable']['Races']; //go through the list of data to get to the first entry
+                        }
                     @endphp
+
 
                     <div id="currentRaceTable" class="collapse show">
                         <div class="card-body d-flex flex-column">
@@ -74,26 +79,26 @@
                                 @foreach ($races as $key => $race)
                                     @php
                                         // go through each entry of the json list
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date_start']); //set the start date to the start date of a race
-                                        $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date_start']) : null; //set the end date to the start date plus 1
+                                        $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
+                                        $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
                                     @endphp
 
                                     @if ($currentDate->between($raceStartDate, $raceEndDate))
                                         @php
                                             //check the race start and the race end date to see if the current date is in between them
-                                            $currentRace = $race;
+                                            $currentRace = $race; //set the current race to the race that currently going on
                                             break;
                                         @endphp
                                     @endif
                                 @endforeach
 
                                 @if ($currentRace)
-                                    <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
-                                        <p class="my-1 mx-2">{{ $currentRace['location'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['meeting_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['country_name'] }}</p>
-                                        <p class="my-1 mx-2">{{ $currentRace['date_start'] }}</p>
-                                    </a>
+                                    <img src="{{ $raceImages[Str::slug($race['Circuit']['Location']['country'])] }}"
+                                        alt="{{ $race['Circuit']['Location']['country'] }} Preview">
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['locality'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['circuitName'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['Circuit']['Location']['country'] }}</p>
+                                    <p class="my-1 mx-2">{{ $currentRace['date'] }}</p>
                                 @else
                                     <p>No race is scheduled currently.</p>
                                 @endif
@@ -140,17 +145,18 @@
                     <div id="previousRaceTable" class="collapse">
                         <div class="card-body d-flex flex-column">
                             @if (!empty($races))
-                                @foreach ($races as $race)
+                                @foreach ($races as $key => $race)
                                     @php
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date_start']);
+                                        $raceStartDate = \Carbon\Carbon::parse($race['date']);
                                     @endphp
 
                                     @if ($raceStartDate->lt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
-                                            <p class="my-1 mx-2">{{ $race['location'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                            <span class="d-flex align-items-center">&#x25B6;</span>
                                         </a>
                                     @endif
                                 @endforeach
@@ -176,15 +182,16 @@
                             @if (!empty($races))
                                 @foreach ($races as $race)
                                     @php
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date_start']);
+                                        $raceStartDate = \Carbon\Carbon::parse($race['date']);
                                     @endphp
 
                                     @if ($raceStartDate->gt($currentDate))
-                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex flex-row">
-                                            <p class="my-1 mx-2">{{ $race['location'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['meeting_name'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['country_name'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['date_start'] }}</p>
+                                        <a href="#" class="btn bg-secondary my-1 mx-2 d-flex justify-content-between">
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                            <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                            <span class="d-flex align-items-center">&#x25B6;</span>
                                         </a>
                                     @endif
                                 @endforeach
@@ -208,9 +215,9 @@
         }
 
         /* .bg-red {
-                                background-color: rgb(255, 0, 0);
-                                color: black;
-                            } */
+                                                                                                                                                                                                                                                                                        background-color: rgb(255, 0, 0);
+                                                                                                                                                                                                                                                                                        color: black;
+                                                                                                                                                                                                                                                                                    } */
     </style>
 
     <script>
