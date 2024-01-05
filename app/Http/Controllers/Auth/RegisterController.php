@@ -11,25 +11,63 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function create()
+    /*
+    |--------------------------------------------------------------------------
+    | Register Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
+    |
+    */
+
+    use RegistersUsers;
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        return view('auth.register');
+        $this->middleware('guest');
     }
-    public function store()
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
     {
-        $attributes = request()->validate([
-
-            'username' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|min:7|max:255'
+        return Validator::make($data, [
+            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+    }
 
-        $user =  User::create($attributes);
-
-        session()->flash('success', 'Jouw account is aangemaakt.');
-        // log in user
-        auth()->login($user);
-
-        return redirect('/');
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\Models\User
+     */
+    protected function create(array $data)
+    {
+        return User::create([
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
     }
 }
