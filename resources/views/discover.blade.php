@@ -15,6 +15,7 @@
                                         style="width: 150px; height: 150px;">
                                 </div>
                                 {{-- <h5 class="card-title">{{ $fullName }}</h5> --}}
+                                <h5 class="card-title">{{ __('Get Name') }}</h5>
                                 {{-- <p class="card-text">@JohnDoe60</p> --}}
                                 <p class="card-text">{{ '@' . $username }}</p>
                                 <p class="card-text">Point Count: 54</p>
@@ -47,13 +48,14 @@
                             <div class="card-body">
                                 <form action="{{ route('discover') }}" method="GET">
                                     <div class="input-group mb-3">
-                                        <input type="search" class="form-control" placeholder="Search..." name="query">
+                                        <input type="search" class="form-control" placeholder="Search..." name="query"
+                                            value="{{ request()->input('query') }}">
                                         <button class="btn btn-primary" type="submit">Search</button>
                                     </div>
                                 </form>
                                 <div class="search-results">
                                     @if ($users->isEmpty())
-                                        @if (empty($query))
+                                        @if (empty(request()->input('query')))
                                             <ul>
                                                 @foreach ($allUsers as $user)
                                                     <li>{{ $user->username }}</li>

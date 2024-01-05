@@ -19,11 +19,9 @@ class DiscoverController extends Controller
             $pointCount = $user->point_count;
 
             // GET USERS
-            $query = $request->input('username');
-            $sort = $request->input('sort', 'username'); // Default sort by username
+            $query = $request->input('query');
 
             $users = User::where('username', 'LIKE', "%$query%")
-                ->orderBy($sort)
                 ->get();
 
             $allUsers = User::all(); // Retrieve all users
@@ -44,7 +42,7 @@ class DiscoverController extends Controller
             // Retrieve notifications of the current user
             $notifications = Notification::where('user_id', $user->id)->get();
 
-            return view('discover', compact('user', 'notifications', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+            return view('discover', compact('user', 'notifications', 'username', 'pointCount', 'users', 'allUsers'));
         } else {
             // User is not authenticated, handle accordingly
             // For example, redirect to login page or show an error message
