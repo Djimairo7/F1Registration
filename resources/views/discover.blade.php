@@ -14,9 +14,9 @@
                                         alt="Profile Picture" class="img-fluid rounded-circle"
                                         style="width: 150px; height: 150px;">
                                 </div>
-                                <h5 class="card-title">{{ $fullName }}</h5>
-                                <p class="card-text">@JohnDoe60</p>
-                                <!-- <p class="card-text">Username: {{ $username }}</p> -->
+                                {{-- <h5 class="card-title">{{ $fullName }}</h5> --}}
+                                {{-- <p class="card-text">@JohnDoe60</p> --}}
+                                <p class="card-text">{{ '@' . $username }}</p>
                                 <p class="card-text">Point Count: 54</p>
                                 <!-- <p class="card-text">Point Count: {{ $pointCount }}</p> -->
                                 <a href="#" class="btn btn-danger">Edit Profile</a>
@@ -52,39 +52,23 @@
                                     </div>
                                 </form>
                                 <div class="search-results">
-                                    <div class="search-results">
-                                        <div class="sorting-options mb-3">
-                                            <label for="sort">Sort By:</label>
-                                            <select id="sort" class="form-control" onchange="this.form.submit()"
-                                                name="sort">
-                                                <option value="name" {{ $sort === 'name' ? 'selected' : '' }}>Name
-                                                </option>
-                                                <option value="created_at" {{ $sort === 'created_at' ? 'selected' : '' }}>
-                                                    Date Created</option>
-                                                <option value="point_count"
-                                                    {{ $sort === 'point_count' ? 'selected' : '' }}>
-                                                    Point Count</option>
-                                                <!-- Add more sorting options as needed -->
-                                            </select>
-                                        </div>
-                                        @if ($users->isEmpty())
-                                            @if (empty($query))
-                                                <ul>
-                                                    @foreach ($allUsers as $user)
-                                                        <li>{{ $user->name }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @else
-                                                <p>No users found.</p>
-                                            @endif
-                                        @else
+                                    @if ($users->isEmpty())
+                                        @if (empty($query))
                                             <ul>
-                                                @foreach ($users as $user)
-                                                    <li>{{ $user->name }}</li>
+                                                @foreach ($allUsers as $user)
+                                                    <li>{{ $user->username }}</li>
                                                 @endforeach
                                             </ul>
+                                        @else
+                                            <p>No users found.</p>
                                         @endif
-                                    </div>
+                                    @else
+                                        <ul>
+                                            @foreach ($users as $user)
+                                                <li>{{ $user->username }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
                                 </div>
                             </div>
                         </div>

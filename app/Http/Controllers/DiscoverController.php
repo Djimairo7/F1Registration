@@ -6,44 +6,48 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
 use App\Models\User; // Import the User model class
 use App\Models\Notification; // Import the Notification model class
-use Illuminate\Support\Facades\DB; // Import the DB facade
 
 class DiscoverController extends Controller
 {
     public function index(Request $request)
     {
-        // USER PROFILE
-        $user = Auth::user(); // Assign the authenticated user to the variable '$user'
-        $fullName = $user->name;
-        $username = $user->username;
-        $pointCount = $user->point_count;
+        // Check if user is authenticated
+        if (Auth::check()) {
+            // USER PROFILE
+            $user = Auth::user(); // Assign the authenticated user to the variable '$user'
+            $username = $user->username;
+            $pointCount = $user->point_count;
 
-        // GET USERS
-        $query = $request->input('query');
-        $sort = $request->input('sort', 'name'); // Default sort by name
+            // GET USERS
+            $query = $request->input('username');
+            $sort = $request->input('sort', 'username'); // Default sort by username
 
-        $users = User::where('name', 'LIKE', "%$query%")
-            ->orderBy($sort)
-            ->get();
+            $users = User::where('username', 'LIKE', "%$query%")
+                ->orderBy($sort)
+                ->get();
 
-        $allUsers = User::all(); // Retrieve all users
+            $allUsers = User::all(); // Retrieve all users
 
-        //TODO: Fix notifications
-        //*
-        // Create a new notification for the logged-in user
-        $notification = [
-            'user_id' => $user->id,
-            'message' => 'This is a test notification.',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
+            //TODO: Fix notifications
+            //*
+            // Create a new notification for the logged-in user
+            $notification = [
+                'user_id' => $user->id,
+                'message' => 'This is a test notification.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
 
-        Notification::insert($notification);
-        //*
+            // Notification::insert($notification);
+            //*
 
-        // Retrieve notifications of the current user
-        $notifications = Notification::where('user_id', $user->id)->get();
+            // Retrieve notifications of the current user
+            $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('discover', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+            return view('discover', compact('user', 'notifications', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+        } else {
+            // User is not authenticated, handle accordingly
+            // For example, redirect to login page or show an error message
+        }
     }
 }
