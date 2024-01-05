@@ -85,7 +85,6 @@
                                             </ul>
                                         @endif
                                     </div>
-                                    <!-- TODO: display search results -->
                                 </div>
                             </div>
                         </div>
