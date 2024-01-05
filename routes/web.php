@@ -26,8 +26,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/profiles', 'profilescontroller@store')->name('profiles.store');
-Route::get('register', [RegisterController::class, 'create']);
-Route::post('register', [RegisterController::class, 'store']);
 
 // add aan het einde van de register routes later
 // ->middleware('guest');

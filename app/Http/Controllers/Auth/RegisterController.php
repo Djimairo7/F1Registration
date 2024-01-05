@@ -51,7 +51,16 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required', 'string', 'email', 'max:255',
+                function ($attribute, $value, $fail) {
+                    $allowedDomains = ['windesheim.nl', 'student.windesheim.nl']; // Replace with your allowed domains
+                    $domain = explode('@', $value)[1];
+                    if (!in_array($domain, $allowedDomains)) {
+                        $fail('The selected email is invalid.');
+                    }
+                },
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
