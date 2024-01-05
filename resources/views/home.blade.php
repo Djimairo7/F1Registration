@@ -5,10 +5,6 @@
     @php
         $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
         // $currentDate = now(); // set back to the current date
-
-        if (isset($getRaces['MRData']['RaceTable']['Races'])) {
-            $races = $getRaces['MRData']['RaceTable']['Races']; //go through the list of data to get to the first entry
-        }
     @endphp
 
     @if (!empty($races))

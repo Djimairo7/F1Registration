@@ -54,22 +54,27 @@
                                     </div>
                                 </form>
                                 <div class="search-results">
-                                    @if ($users->isEmpty())
-                                        @if (empty(request()->input('query')))
-                                            <ul>
-                                                @foreach ($allUsers as $user)
-                                                    <li>{{ $user->username }}</li>
-                                                @endforeach
-                                            </ul>
-                                        @else
-                                            <p>No users found.</p>
-                                        @endif
-                                    @else
+                                    @if (!empty($users))
                                         <ul>
                                             @foreach ($users as $user)
                                                 <li>{{ $user->username }}</li>
                                             @endforeach
                                         </ul>
+                                    @endif
+                                    @if (!empty($races))
+                                        die(var_dump($races));
+                                        @foreach ($races as $race)
+                                            <a href="#"
+                                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                                <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                                <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                                <i class="fas fa-chevron-right ml-2"></i>
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <p>No races found.</p>
                                     @endif
                                 </div>
                             </div>
