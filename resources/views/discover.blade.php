@@ -54,28 +54,50 @@
                                     </div>
                                 </form>
                                 <div class="search-results">
-                                    @if (!empty($users))
-                                        <ul>
-                                            @foreach ($users as $user)
-                                                <li>{{ $user->username }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                    @if (!empty($races))
-                                        die(var_dump($races));
-                                        @foreach ($races as $race)
-                                            <a href="#"
-                                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
-                                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
-                                                <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
-                                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
-                                                <p class="my-1 mx-2">{{ $race['date'] }}</p>
-                                                <i class="fas fa-chevron-right ml-2"></i>
-                                            </a>
-                                        @endforeach
+                                    <h3>Users</h3>
+                                    @if (!empty($filteredUsers))
+                                        <div class="card-container overflow-x-scroll">
+                                            <div class="d-inline-flex">
+                                                @foreach ($filteredUsers as $user)
+                                                    <div class="card m-2 d-inline-grid flex-shrink-0">
+                                                        <div class="card-body d-flex flex-column">
+                                                            <h5 class="card-title text-nowrap">{{ $user->username }}</h5>
+                                                            <a href="#" class="btn btn-primary mt-auto">View
+                                                                Details</a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     @else
-                                        <p>No races found.</p>
+                                        <p>No users found.</p>
                                     @endif
+
+                                    <h3>Races</h3>
+                                    <div class="card-container overflow-x-scroll">
+                                        <div class="d-inline-flex">
+                                            @if (!empty($filteredRaces))
+                                                @foreach ($filteredRaces as $race)
+                                                    <div class="card m-2 d-inline-grid flex-shrink-0">
+                                                        <div class="card-body d-flex flex-column">
+                                                            <h5 class="card-title text-nowrap">{{ $race['raceName'] }}</h5>
+                                                            <p class="card-text text-nowrap">Locality:
+                                                                {{ $race['Circuit']['Location']['locality'] }}</p>
+                                                            <p class="card-text text-nowrap">Circuit Name:
+                                                                {{ $race['Circuit']['circuitName'] }}</p>
+                                                            <p class="card-text text-nowrap">Country:
+                                                                {{ $race['Circuit']['Location']['country'] }}</p>
+                                                            <p class="card-text text-nowrap">Date: {{ $race['date'] }}</p>
+                                                            <a href="#" class="btn btn-primary mt-auto">View
+                                                                Details</a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <p>No races found.</p>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

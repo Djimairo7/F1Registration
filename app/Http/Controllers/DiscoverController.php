@@ -24,11 +24,29 @@ class DiscoverController extends Controller
             $drivers = App::make('drivers');
             $raceImages = App::make('raceImages');
 
-            // GET USERS
+            // GET search query
             $query = $request->input('query');
 
-            $users = User::where('username', 'LIKE', "%$query%")
-                ->get();
+            // Retrieve users based on the search query
+            $filteredUsers = User::where(
+                'username',
+                'LIKE',
+                "%$query%"
+            )->get();
+
+            // Filter races based on the search query
+            $filteredRaces = collect($races)->filter(function ($race) use ($query) {
+                $raceName = $race['raceName'];
+                $locality = $race['Circuit']['Location']['locality'];
+                $circuitName = $race['Circuit']['circuitName'];
+                $country = $race['Circuit']['Location']['country'];
+
+                return stripos($raceName, $query) !== false ||
+                    stripos($locality, $query) !== false ||
+                    stripos($circuitName, $query) !== false ||
+                    stripos($country, $query) !== false;
+            })->values();
+
 
             $allUsers = User::all(); // Retrieve all users
 
@@ -48,7 +66,7 @@ class DiscoverController extends Controller
             // Retrieve notifications of the current user
             $notifications = Notification::where('user_id', $user->id)->get();
 
-            return view('discover', compact('user', 'users', 'allUsers', 'notifications', 'username', 'pointCount', 'races', 'drivers'));
+            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'allUsers', 'notifications', 'username', 'pointCount', 'races', 'drivers'));
         } else {
             // User is not authenticated, handle accordingly
             // For example, redirect to login page or show an error message

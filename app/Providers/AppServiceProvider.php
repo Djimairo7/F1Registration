@@ -40,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
             $raceImages[$countryName] = $imageUrl;
         }
 
+        // dd($races);
+
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers);
         $this->app->instance('raceImages', $raceImages);
