@@ -80,9 +80,18 @@
                     </div>
                     <div class="col-4 col-md-12 mb-4">
                         <div class="card bg-black text-white p-2">
-                            <div class="card-header">{{ __('Second Card') }}</div>
-                            <div class="card-body">
-                                <!-- Content for the second card -->
+                            <div class="card-header">{{ __('Notifications') }}</div>
+                            <div class="card-body overflow-auto">
+                                @foreach ($notifications as $notification)
+                                    <div class="btn bg-secondary d-flex justify-content-between align-items-center">
+                                        <a href="#" class="nav-link">
+                                            <p class="my-1 mx-2">{{ $notification->message }}</p>
+                                        </a>
+                                        <a href="#" class="text-danger">
+                                            <i class="fas fa-trash ml-2"></i>
+                                        </a>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -102,8 +111,6 @@
                             </button>
                         </h5>
                     </div>
-
-
 
                     <div id="currentRaceTable" class="collapse show">
                         <div class="card-body d-flex flex-column">

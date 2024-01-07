@@ -47,6 +47,16 @@ class DiscoverController extends Controller
                     stripos($country, $query) !== false;
             })->values();
 
+            // Filter drivers based on the search query
+            $filteredDrivers = collect($drivers)->filter(function ($driver) use ($query) {
+                $givenName = $driver['givenName'];
+                $familyName = $driver['familyName'];
+                $nationality = $driver['nationality'];
+
+                return stripos($givenName, $query) !== false ||
+                    stripos($familyName, $query) !== false ||
+                    stripos($nationality, $query) !== false;
+            })->values();
 
             $allUsers = User::all(); // Retrieve all users
 
@@ -66,7 +76,7 @@ class DiscoverController extends Controller
             // Retrieve notifications of the current user
             $notifications = Notification::where('user_id', $user->id)->get();
 
-            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'allUsers', 'notifications', 'username', 'pointCount', 'races', 'drivers'));
+            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'notifications', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
         } else {
             // User is not authenticated, handle accordingly
             // For example, redirect to login page or show an error message

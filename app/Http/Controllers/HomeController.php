@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
-use Illuminate\Support\Facades\Http; // Import the Http facade
-use Illuminate\Support\Str; // Import the Str facade
+use App\Models\Notification; // Import the Notification model class
 use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
@@ -35,6 +34,10 @@ class HomeController extends Controller
         $drivers = App::make('drivers');
         $raceImages = App::make('raceImages');
 
-        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'raceImages'));
+
+        // Retrieve notifications of the current user
+        $notifications = Notification::where('user_id', $user->id)->get();
+
+        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'raceImages', 'notifications'));
     }
 }

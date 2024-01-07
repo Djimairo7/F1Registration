@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Auth; // Import the Auth facade
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str; // Import the Str facade
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,11 +23,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //* GET info from API
-        $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
-        $races = $racesreq->json();
+        $races = Cache::remember('races', 60, function () {
+            $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
+            return $racesreq->json();
+        });
 
-        $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
-        $drivers = $driversreq->json();
+        $drivers = Cache::remember('drivers', 60, function () {
+            $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
+            return $driversreq->json();
+        });
 
         // dd($getRaces, $getDrivers);
 
@@ -40,10 +44,10 @@ class AppServiceProvider extends ServiceProvider
             $raceImages[$countryName] = $imageUrl;
         }
 
-        // dd($races);
+        // dd($drivers);
 
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
-        $this->app->instance('drivers', $drivers);
+        $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
         $this->app->instance('raceImages', $raceImages);
     }
 }
