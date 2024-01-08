@@ -22,3 +22,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/discover', [App\Http\Controllers\DiscoverController::class, 'index'])->name('discover');
+Route::get('/race/{raceName}', 'RaceController@show');
