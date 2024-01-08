@@ -23,12 +23,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //* GET info from API
-        $races = Cache::remember('races', 60, function () {
+        $races = Cache::remember('races', 180, function () {
             $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
             return $racesreq->json();
         });
 
-        $drivers = Cache::remember('drivers', 60, function () {
+        $drivers = Cache::remember('drivers', 180, function () {
             $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
             return $driversreq->json();
         });

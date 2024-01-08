@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Race;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class RaceController extends Controller
 {
     //
     public function show($raceName)
     {
-        $race = Race::where('name', $raceName)->first();
+        $races = App::make('races');
+
+
+        $race = collect($races)->first(function ($value) use ($raceName) {
+            // Str::slug($value['raceName']);
+            // Debugging code
+            // dd(Str::slug($value['raceName']), $raceName);
+            return Str::slug($value['Circuit']['circuitName']) == $raceName;
+        });
 
         if (!$race) {
             abort(404);

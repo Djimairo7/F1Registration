@@ -205,7 +205,7 @@
                                     @endphp
 
                                     @if ($raceStartDate->lt($currentDate))
-                                        <a href="{{ route('race.show', ['raceName' => $race->raceName]) }}"
+                                        <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
                                             class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
@@ -244,7 +244,7 @@
                                     @endphp
                                     {{-- //TODO: align these better --}}
                                     @if ($raceStartDate->gt($currentDate))
-                                        <a href="#"
+                                        <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
                                             class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                             <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                             <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
