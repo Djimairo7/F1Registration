@@ -39,6 +39,6 @@ class HomeController extends Controller
         // Retrieve notifications of the current user
         $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('home', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'currentDate', 'races', 'drivers'));
+        return view('home', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'currentDate', 'races', 'raceImages', 'drivers'));
     }
 }
