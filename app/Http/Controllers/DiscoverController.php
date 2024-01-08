@@ -32,6 +32,7 @@ class DiscoverController extends Controller
             $races = App::make('races');
             $drivers = App::make('drivers');
             $raceImages = App::make('raceImages');
+            $currentDate = App::make('currentDate');
 
             // GET search query
             $query = $request->input('query');
@@ -85,10 +86,7 @@ class DiscoverController extends Controller
             // Retrieve notifications of the current user
             $notifications = Notification::where('user_id', $user->id)->get();
 
-            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'notifications', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
-        } else {
-            // User is not authenticated, handle accordingly
-            // For example, redirect to login page or show an error message
+            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'notifications', 'fullName', 'username', 'pointCount', 'currentDate', 'races', 'drivers'));
         }
     }
 }

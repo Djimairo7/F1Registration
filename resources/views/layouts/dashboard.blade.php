@@ -1,48 +1,32 @@
 @extends('layouts.app')
 
-@if (!empty($races))
-    @php
-        $currentRace = null; //set the current race to null for fallback
-    @endphp
-
-    @foreach ($races as $key => $race)
-        @php
-            // go through each entry of the json list
-            $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
-            $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
-        @endphp
-
-        @if ($currentDate->between($raceStartDate, $raceEndDate))
+@php
+    $currentRace = null; //set the current race to null for fallback
+@endphp
+@isset($races)
+    @if (!empty($races))
+        @foreach ($races as $key => $race)
             @php
-                //check the race start and the race end date to see if the current date is in between them
-                $currentRace = $race; //set the current race to the race that currently going on
-                break;
+                // go through each entry of the json list
+                $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
+                $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
             @endphp
-        @endif
-    @endforeach
-@endif
 
+            @if ($currentDate->between($raceStartDate, $raceEndDate))
+                @php
+                    //check the race start and the race end date to see if the current date is in between them
+                    $currentRace = $race; //set the current race to the race that currently going on
+                    break;
+                @endphp
+            @endif
+        @endforeach
+    @endif
+@endisset
 @section('content')
     <div class="container bg-secondary">
         <div class="row">
-            {{-- <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
-                    </div>
-                </div>
-            </div> --}}
-
             <div class="col-md-4">
-                <div class="d-flex flex-wrap flex-md-column m-2 sticky-top">
+                <div class="d-flex flex-wrap flex-md-column m-2">
                     <div class="col-8 col-md-12 mb-2">
                         <div class="card bg-black text-white p-2">
                             <div class="card-header">{{ __('First Card') }}</div>
@@ -91,17 +75,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-8">
+                <div class="d-flex flex-wrap flex-md-column m-2">
+                    <div class="col-8 col-md-12 mb-2">
+                        <div class="card bg-black text-white p-2">
+                            <div class="card-header">{{ __('Search') }}</div>
+                            <div class="card-body">
+                                @yield('dashboard-content')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-
-
-
-    <div class="text-white">
-        <h1>{{ $race['raceName'] }}</h1>
-        <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
-        <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
-        <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
-        <p class="my-1 mx-2">{{ $race['date'] }}</p>
     </div>
 @endsection

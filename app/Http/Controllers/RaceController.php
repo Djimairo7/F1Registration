@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class RaceController extends Controller
 {
     //
     public function show($raceName)
     {
-        $races = App::make('races');
+        $user = Auth::user(); // Assign the authenticated user to the variable '$user'
+        $fullName = $user->name;
+        $username = $user->username;
+        $pointCount = $user->point_count;
 
+        $races = App::make('races');
+        $currentDate = App::make('currentDate');
 
         $race = collect($races)->first(function ($value) use ($raceName) {
             // Str::slug($value['raceName']);
@@ -24,6 +30,6 @@ class RaceController extends Controller
             abort(404);
         }
 
-        return view('race.show', compact('race'));
+        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'currentDate', 'race'));
     }
 }

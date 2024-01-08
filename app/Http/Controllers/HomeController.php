@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // USER PROFILE
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
         $fullName = $user->name;
         $username = $user->username;
@@ -33,11 +34,11 @@ class HomeController extends Controller
         $races = App::make('races');
         $drivers = App::make('drivers');
         $raceImages = App::make('raceImages');
-
+        $currentDate = App::make('currentDate');
 
         // Retrieve notifications of the current user
         $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'raceImages', 'notifications'));
+        return view('home', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'currentDate', 'races', 'drivers'));
     }
 }

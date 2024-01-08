@@ -1,17 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
-
-    @php
-        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
-        // $currentDate = now(); // set back to the current date
-    @endphp
-
+@extends('layouts.dashboard')
+@php
+    $currentRace = null; //set the current race to null for fallback
+@endphp
+@isset($races)
     @if (!empty($races))
-        @php
-            $currentRace = null; //set the current race to null for fallback
-        @endphp
-
         @foreach ($races as $key => $race)
             @php
                 // go through each entry of the json list
@@ -28,237 +20,328 @@
             @endif
         @endforeach
     @endif
+@endisset
+@section('dashboard-content')
+    <div class="card my-2 bg-black text-white">
+        <div class="card-header bg-danger">
+            <h5 class="mb-0">
+                <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                    onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
+                    aria-controls="currentRaceTable">
+                    <p class="mb-0 align-self-center">Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
+                    </p>
+                    <i id="currentRaceTableIcon" class="fas fa-chevron-up ml-2"></i>
+                </button>
+            </h5>
+        </div>
 
-    <div class="container bg-secondary">
-        <div class="row">
-            {{-- <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+        <div id="currentRaceTable" class="collapse show">
+            <div class="card-body d-flex flex-column">
+                @if (!empty($races))
+                    @if ($currentRace)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <img src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
+                                        alt="{{ $currentRace['Circuit']['Location']['country'] }} Preview"
+                                        class="img-fluid">
+                                    <p class="my-0">{{ $currentRace['Circuit']['circuitName'] }},
+                                        {{ $currentRace['Circuit']['Location']['country'] }}</p>
+                                    <p class="my-0">{{ $currentRace['date'] }}</p>
+                                </div>
                             </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
-                    </div>
-                </div>
-            </div> --}}
-
-            <div class="col-md-4">
-                <div class="d-flex flex-wrap flex-md-column m-2 sticky-top">
-                    <div class="col-8 col-md-12 mb-2">
-                        <div class="card bg-black text-white p-2">
-                            <div class="card-header">{{ __('First Card') }}</div>
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <img src="https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp"
-                                        alt="Profile Picture" class="img-fluid rounded-circle"
-                                        style="width: 150px; height: 150px;">
-                                </div>
-                                <div class="col-md-8">
-                                    <h5 class="card-title">{{ $fullName }}</h5>
-                                    <p class="card-text">@JohnDoe60</p>
-                                    <!-- <p class="card-text">Username: {{ $username }}</p> -->
-                                    <p class="card-text">Point Count: 54</p>
-                                </div>
-                                <hr>
-                                <div class="row justify-content-between">
-                                    <div class="col-auto">
-                                        <p class="m-0">{{ $currentRace['Circuit']['circuitName'] }}</p>
+                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                <form class="text-center" method="POST" action="#">
+                                    @csrf
+                                    <h2 class="mb-4">Tijd Toevoegen</h2>
+                                    <div class="form-group">
+                                        <input type="text"
+                                            class="form-control form-control-lg bg-secondary text-white border-0 text-center"
+                                            placeholder="Gereden Tijd" name="Time">
                                     </div>
-                                    <div class="col-auto">
-                                        <p class="m-0">Tijd: 1.23.456</p>
+                                    <div class="form-group mt-3">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="UplRaceImg"
+                                                name="UplRaceImg" hidden>
+                                            <label
+                                                class="custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
+                                                for="UplRaceImg">Upload Image</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <hr>
-                                <a href="#" class="btn btn-danger">Edit Profile</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4 col-md-12 mb-4">
-                        <div class="card bg-black text-white p-2">
-                            <div class="card-header">{{ __('Notifications') }}</div>
-                            <div class="card-body overflow-auto">
-                                @foreach ($notifications as $notification)
-                                    <div class="btn bg-secondary d-flex justify-content-between align-items-center">
-                                        <a href="#" class="nav-link">
-                                            <p class="my-1 mx-2">{{ $notification->message }}</p>
-                                        </a>
-                                        <a href="#" class="text-danger">
-                                            <i class="fas fa-trash ml-2"></i>
-                                        </a>
-                                    </div>
-                                @endforeach
+                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @else
+                        <p>No race is scheduled currently.</p>
+                    @endif
+                @else
+                    <p>No races found.</p>
+                @endif
             </div>
-            <div class="col-md-8">
-                <div class="card my-2 bg-black text-white">
-                    <div class="card-header bg-danger">
-                        <h5 class="mb-0">
-                            <button
-                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                                onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
-                                aria-controls="currentRaceTable">
-                                <p class="mb-0 align-self-center">Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
-                                </p>
-                                <i id="currentRaceTableIcon" class="fas fa-chevron-up ml-2"></i>
-                            </button>
-                        </h5>
-                    </div>
+        </div>
+    </div>
 
-                    <div id="currentRaceTable" class="collapse show">
-                        <div class="card-body d-flex flex-column">
-                            @if (!empty($races))
-                                @if ($currentRace)
+    <div class="card my-2 bg-black text-white">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                    onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
+                    aria-controls="futureRaceTable">
+                    <p class="mb-0 align-self-center">Eerdere races</p>
+                    <i id="previousRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
+                </button>
+            </h5>
+        </div>
+
+        <div id="previousRaceTable" class="collapse">
+            <div class="card-body d-flex flex-column">
+                @if (!empty($races))
+                    @foreach ($races as $key => $race)
+                        @php
+                            $raceStartDate = \Carbon\Carbon::parse($race['date']);
+                        @endphp
+
+                        @if ($raceStartDate->lt($currentDate))
+                            <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
+                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                <i class="fas fa-chevron-right ml-2"></i>
+                            </a>
+                        @endif
+                    @endforeach
+                @else
+                    <p>No races found.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-2 bg-black text-white">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                    onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
+                    aria-controls="futureRaceTable">
+                    <p class="mb-0 align-self-center">Toekomstige races</p>
+                    <i id="futureRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
+                </button>
+            </h5>
+        </div>
+
+        <div id="futureRaceTable" class="collapse">
+            <div class="card-body d-flex flex-column">
+                @if (!empty($races))
+                    @foreach ($races as $race)
+                        @php
+                            $raceStartDate = \Carbon\Carbon::parse($race['date']);
+                        @endphp
+                        {{-- //TODO: align these better --}}
+                        @if ($raceStartDate->gt($currentDate))
+                            <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
+                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                <i class="fas fa-chevron-right ml-2"></i>
+                            </a>
+                        @endif
+                    @endforeach
+                @else
+                    <p>No races found.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- @section('content')
+    <div class="col-md-8">
+        <div class="card my-2 bg-black text-white">
+            <div class="card-header bg-danger">
+                <h5 class="mb-0">
+                    <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                        onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
+                        aria-controls="currentRaceTable">
+                        <p class="mb-0 align-self-center">Huidige race -{{ $currentRace['Circuit']['circuitName'] }}
+                        </p>
+                        <i id="currentRaceTableIcon" class="fas fa-chevron-up ml-2"></i>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="currentRaceTable" class="collapse show">
+                <div class="card-body d-flex flex-column">
+                    @if (!empty($races))
+                        @if ($currentRace)
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <img src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
-                                                    alt="{{ $currentRace['Circuit']['Location']['country'] }} Preview"
-                                                    class="img-fluid">
-                                                <p class="my-0">{{ $currentRace['Circuit']['circuitName'] }},
-                                                    {{ $currentRace['Circuit']['Location']['country'] }}</p>
-                                                <p class="my-0">{{ $currentRace['date'] }}</p>
+                                        <img src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
+                                            alt="{{ $currentRace['Circuit']['Location']['country'] }} Preview"
+                                            class="img-fluid">
+                                        <p class="my-0">{{ $currentRace['Circuit']['circuitName'] }},
+                                            {{ $currentRace['Circuit']['Location']['country'] }}</p>
+                                        <p class="my-0">{{ $currentRace['date'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                    <form class="text-center" method="POST" action="#">
+                                        @csrf
+                                        <h2 class="mb-4">Tijd Toevoegen</h2>
+                                        <div class="form-group">
+                                            <input type="text"
+                                                class="form-control form-control-lg bg-secondary text-white border-0 text-center"
+                                                placeholder="Gereden Tijd" name="Time">
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="UplRaceImg"
+                                                    name="UplRaceImg" hidden>
+                                                <label
+                                                    class="custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
+                                                    for="UplRaceImg">Upload Image</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                            <form class="text-center" method="POST" action="#">
-                                                @csrf
-                                                <h2 class="mb-4">Tijd Toevoegen</h2>
-                                                <div class="form-group">
-                                                    <input type="text"
-                                                        class="form-control form-control-lg bg-secondary text-white border-0 text-center"
-                                                        placeholder="Gereden Tijd" name="Time">
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="UplRaceImg"
-                                                            name="UplRaceImg" hidden>
-                                                        <label
-                                                            class="custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
-                                                            for="UplRaceImg">Upload Image</label>
-                                                    </div>
-                                                </div>
-                                                <button type="submit"
-                                                    class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @else
-                                    <p>No race is scheduled currently.</p>
-                                @endif
-                            @else
-                                <p>No races found.</p>
-                            @endif
-                        </div>
-                    </div>
+                                        <button type="submit"
+                                            class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @else
+                            <p>No race is scheduled currently.</p>
+                        @endif
+                    @else
+                        <p>No races found.</p>
+                    @endif
                 </div>
+            </div>
+        </div>
 
 
-                {{-- <div class="card my-2 bg-black text-white">
-                    <div class="card-header">
-                        <h5 class="mb-0">
-                            <button class="btn w-100 text-sm-left text-white" onclick="toggleCollapse('futureRaceTable')"
-                                aria-expanded="false" aria-controls="futureRaceTable">
-                                Toekomstige races
-                            </button>
-                        </h5>
-                    </div>
+        <div class="card my-2 bg-black text-white">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <button class="btn w-100 text-sm-left text-white" onclick="toggleCollapse('futureRaceTable')"
+                        aria-expanded="false" aria-controls="futureRaceTable">
+                        Toekomstige races
+                    </button>
+                </h5>
+            </div>
 
-                    <div id="futureRaceTable" class="collapse">
-                        <div class="card-body d-flex flex-column">
-                            @foreach ($races as $race)
-                                <a href="#" class="btn bg-secondary my-1 d-flex flex-row">
-                                    <p class="my-1 mx-2">{{ $race->name }}</p>
-                                    <p class="my-1 mx-2">{{ $race->location }}</p>
+            <div id="futureRaceTable" class="collapse">
+                <div class="card-body d-flex flex-column">
+                    @foreach ($races as $race)
+                        <a href="#" class="btn bg-secondary my-1 d-flex flex-row">
+                            <p class="my-1 mx-2">{{ $race->name }}</p>
+                            <p class="my-1 mx-2">{{ $race->location }}</p>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="card my-2 bg-black text-white">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                        onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
+                        aria-controls="futureRaceTable">
+                        <p class="mb-0 align-self-center">Eerdere races</p>
+                        <i id="previousRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                </h5>
+            </div>
+
+            <div id="previousRaceTable" class="collapse">
+                <div class="card-body d-flex flex-column">
+                    @if (!empty($races))
+                        @foreach ($races as $key => $race)
+                            @php
+                                $raceStartDate = \Carbon\Carbon::parse($race['date']);
+                            @endphp
+
+                            @if ($raceStartDate->lt($currentDate))
+                                <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
+                                    class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                    <i class="fas fa-chevron-right ml-2"></i>
                                 </a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div> --}}
-
-                <div class="card my-2 bg-black text-white">
-                    <div class="card-header">
-                        <h5 class="mb-0">
-                            <button
-                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                                onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
-                                aria-controls="futureRaceTable">
-                                <p class="mb-0 align-self-center">Eerdere races</p>
-                                <i id="previousRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
-                            </button>
-                        </h5>
-                    </div>
-
-                    <div id="previousRaceTable" class="collapse">
-                        <div class="card-body d-flex flex-column">
-                            @if (!empty($races))
-                                @foreach ($races as $key => $race)
-                                    @php
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date']);
-                                    @endphp
-
-                                    @if ($raceStartDate->lt($currentDate))
-                                        <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['date'] }}</p>
-                                            <i class="fas fa-chevron-right ml-2"></i>
-                                        </a>
-                                    @endif
-                                @endforeach
-                            @else
-                                <p>No races found.</p>
                             @endif
-                        </div>
-                    </div>
+                        @endforeach
+                    @else
+                        <p>No races found.</p>
+                    @endif
                 </div>
+            </div>
+        </div>
 
-                <div class="card my-2 bg-black text-white">
-                    <div class="card-header">
-                        <h5 class="mb-0">
-                            <button
-                                class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                                onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
-                                aria-controls="futureRaceTable">
-                                <p class="mb-0 align-self-center">Toekomstige races</p>
-                                <i id="futureRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
-                            </button>
-                        </h5>
-                    </div>
+        <div class="card my-2 bg-black text-white">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
+                        onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
+                        aria-controls="futureRaceTable">
+                        <p class="mb-0 align-self-center">Toekomstige races</p>
+                        <i id="futureRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                </h5>
+            </div>
 
-                    <div id="futureRaceTable" class="collapse">
-                        <div class="card-body d-flex flex-column">
-                            @if (!empty($races))
-                                @foreach ($races as $race)
-                                    @php
-                                        $raceStartDate = \Carbon\Carbon::parse($race['date']);
-                                    @endphp
-                                    {{-- //TODO: align these better --}}
-                                    @if ($raceStartDate->gt($currentDate))
-                                        <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                            class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
-                                            <p class="my-1 mx-2">{{ $race['date'] }}</p>
-                                            <i class="fas fa-chevron-right ml-2"></i>
-                                        </a>
-                                    @endif
-                                @endforeach
-                            @else
-                                <p>No races found.</p>
+            <div id="futureRaceTable" class="collapse">
+                <div class="card-body d-flex flex-column">
+                    @if (!empty($races))
+                        @foreach ($races as $race)
+                            @php
+                                $raceStartDate = \Carbon\Carbon::parse($race['date']);
+                            @endphp
+                            //TODO: align these better
+                            @if ($raceStartDate->gt($currentDate))
+                                <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
+                                    class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
+                                    <p class="my-1 mx-2">{{ $race['date'] }}</p>
+                                    <i class="fas fa-chevron-right ml-2"></i>
+                                </a>
                             @endif
-                        </div>
-                    </div>
+                        @endforeach
+                    @else
+                        <p>No races found.</p>
+                    @endif
                 </div>
             </div>
         </div>
@@ -295,4 +378,4 @@
         }
     </script>
 
-@endsection
+@endsection --}}

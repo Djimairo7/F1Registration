@@ -42,12 +42,16 @@ class AppServiceProvider extends ServiceProvider
             $imageName = str_replace('-', '%20', Str::slug($race['Circuit']['Location']['country'])) . '.png'; //convert - to %20 for compatibility with the URL
             $imageUrl = 'https://media.formula1.com/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/' . $imageName;
             $raceImages[$countryName] = $imageUrl;
-        }
+        };
+
+        $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
+        // $currentDate = now(); // set back to the current date
 
         // dd($drivers);
 
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
         $this->app->instance('raceImages', $raceImages);
+        $this->app->instance('currentDate', $currentDate);
     }
 }
