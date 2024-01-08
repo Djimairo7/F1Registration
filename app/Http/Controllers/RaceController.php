@@ -17,7 +17,6 @@ class RaceController extends Controller
         $pointCount = $user->point_count;
 
         $races = App::make('races');
-        $currentDate = App::make('currentDate');
 
         $race = collect($races)->first(function ($value) use ($raceName) {
             // Str::slug($value['raceName']);
@@ -30,6 +29,6 @@ class RaceController extends Controller
             abort(404);
         }
 
-        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'currentDate', 'race'));
+        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race'));
     }
 }

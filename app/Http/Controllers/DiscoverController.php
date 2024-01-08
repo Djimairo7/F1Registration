@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
 use App\Models\User; // Import the User model class
-use App\Models\Notification; // Import the Notification model class
 use Illuminate\Support\Facades\App;
 
 class DiscoverController extends Controller
@@ -69,23 +68,9 @@ class DiscoverController extends Controller
 
             $allUsers = User::all(); // Retrieve all users
 
-            //TODO: Fix notifications
-            //*
-            // Create a new notification for the logged-in user
-            $notification = [
-                'user_id' => $user->id,
-                'message' => 'This is a test notification.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
 
-            // Notification::insert($notification);
-            //*
 
-            // Retrieve notifications of the current user
-            $notifications = Notification::where('user_id', $user->id)->get();
-
-            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'notifications', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
+            return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
         } else {
             // User is not authenticated, handle accordingly
             // For example, redirect to login page or show an error message

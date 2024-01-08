@@ -1,32 +1,5 @@
 @extends('layouts.app')
 
-@php
-    $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
-    // $currentDate = now(); // set back to the current date
-@endphp
-
-@if (!empty($races))
-    @php
-        $currentRace = null; //set the current race to null for fallback
-    @endphp
-
-    @foreach ($races as $key => $race)
-        @php
-            // go through each entry of the json list
-            $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
-            $raceEndDate = isset($races[$key + 1]) ? \Carbon\Carbon::parse($races[$key + 1]['date']) : null; //set the end date to the start date plus 1
-        @endphp
-
-        @if ($currentDate->between($raceStartDate, $raceEndDate))
-            @php
-                //check the race start and the race end date to see if the current date is in between them
-                $currentRace = $race; //set the current race to the race that currently going on
-                break;
-            @endphp
-        @endif
-    @endforeach
-@endif
-
 @section('content')
     <div class="container bg-secondary">
         <div class="row">
