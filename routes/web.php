@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +26,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/profiles', 'profilescontroller@store')->name('profiles.store');
-
+Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 // add aan het einde van de register routes later
 // ->middleware('guest');
