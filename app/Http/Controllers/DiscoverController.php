@@ -30,7 +30,6 @@ class DiscoverController extends Controller
 
             $races = App::make('races');
             $drivers = App::make('drivers');
-            $raceImages = App::make('raceImages');
 
             // GET search query
             $query = $request->input('query');

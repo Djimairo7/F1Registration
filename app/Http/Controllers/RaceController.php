@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Score; // Import the Score class from the correct namespace
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request; // Import the Request class from the correct namespace
 
 class RaceController extends Controller
 {
@@ -19,9 +21,6 @@ class RaceController extends Controller
         $races = App::make('races');
 
         $race = collect($races)->first(function ($value) use ($raceName) {
-            // Str::slug($value['raceName']);
-            // Debugging code
-            // dd(Str::slug($value['raceName']), $raceName);
             return Str::slug($value['Circuit']['circuitName']) == $raceName;
         });
 
@@ -29,6 +28,32 @@ class RaceController extends Controller
             abort(404);
         }
 
-        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race'));
+        // Get the leaderboard data
+        $users = Score::where('race_name', $raceName)->orderBy('score', 'desc')->get();
+
+        $scores = Score::with('user')->get();
+
+        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race', 'users', 'scores'));
+    }
+    public function submitScore(Request $request, $raceName)
+    {
+        $request->validate([
+            'Time' => 'required|min:6|max:6',
+            'UplRaceImg' => 'required|image',
+        ]);
+
+        $imagePath = $request->file('UplRaceImg')->getRealPath();
+        $image = file_get_contents($imagePath);
+        $base64Image = base64_encode($image);
+
+        $score = new Score; // Create a new instance of the Score class
+
+        $score->user_id = auth()->id();
+        $score->race_name = $raceName;
+        $score->score = $request->input('Time');
+        $score->image = $base64Image;
+        $score->save();
+
+        return redirect()->back()->with('success', 'Score submitted successfully');
     }
 }

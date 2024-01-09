@@ -32,12 +32,11 @@ class HomeController extends Controller
 
         $races = App::make('races');
         $drivers = App::make('drivers');
-        $raceImages = App::make('raceImages');
 
 
         // Retrieve notifications of the current user
         $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'raceImages', 'notifications'));
+        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'notifications'));
     }
 }

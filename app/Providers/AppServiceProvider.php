@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
-        $this->app->instance('raceImages', $raceImages);
+        view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
         view()->share('currentRace', $currentRace);
     }
