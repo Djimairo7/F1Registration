@@ -48,7 +48,8 @@
                                             <p class="card-text text-nowrap">Country:
                                                 {{ $race['Circuit']['Location']['country'] }}</p>
                                             <p class="card-text text-nowrap">Date: {{ $race['date'] }}</p>
-                                            <a href="#" class="btn btn-primary mt-auto">View
+                                            <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
+                                                class="btn btn-primary mt-auto">View
                                                 Details</a>
                                         </div>
                                     </div>
