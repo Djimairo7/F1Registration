@@ -14,15 +14,15 @@ class DiscoverController extends Controller
     {
         // USER PROFILE
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
-        $fullName = $user->name;
+        // $fullName = $user->name;
         $username = $user->username;
         $pointCount = $user->point_count;
 
         // GET USERS
         $query = $request->input('query');
-        $sort = $request->input('sort', 'name'); // Default sort by name
+        $sort = $request->input('sort', 'username'); // Default sort by name
 
-        $users = User::where('name', 'LIKE', "%$query%")
+        $users = User::where('username', 'LIKE', "%$query%")
             ->orderBy($sort)
             ->get();
 
@@ -44,6 +44,6 @@ class DiscoverController extends Controller
         // Retrieve notifications of the current user
         $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('discover', compact('user', 'notifications', 'fullName', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
+        return view('discover', compact('user', 'notifications', 'username', 'pointCount', 'users', 'allUsers', 'sort'));
     }
 }
