@@ -22,8 +22,9 @@
                                     <div class="card m-2 d-inline-grid flex-shrink-0">
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title text-nowrap">{{ $user->username }}</h5>
-                                            <a href="#" class="btn btn-primary mt-auto">View
-                                                Details</a>
+                                            <a href="#" class="btn btn-primary mt-auto">
+                                                View Details
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -49,8 +50,9 @@
                                                 {{ $race['Circuit']['Location']['country'] }}</p>
                                             <p class="card-text text-nowrap">Date: {{ $race['date'] }}</p>
                                             <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                                class="btn btn-primary mt-auto">View
-                                                Details</a>
+                                                class="btn btn-primary mt-auto">
+                                                View Details
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -75,8 +77,9 @@
                                             </p>
                                             <p class="card-text text-nowrap">Number:
                                                 {{ $driver['permanentNumber'] }}</p>
-                                            <a href="#" class="btn btn-primary mt-auto">View
-                                                Details</a>
+                                            <a href="#" class="btn btn-primary mt-auto">
+                                                View Details
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
