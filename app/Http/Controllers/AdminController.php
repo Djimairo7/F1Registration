@@ -9,8 +9,9 @@ class AdminController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
         if (Auth::user()->IsAdmin == 1) {
-            return view('auth.admin');
+            return view('auth.admin', compact('user'));
         } else {
             return redirect()->route('home');
         }
