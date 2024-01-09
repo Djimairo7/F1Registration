@@ -29,6 +29,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
+
+
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -77,6 +79,8 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+
+            // session()->flash('message', 'Registered succesfully.')
         ]);
     }
 }
