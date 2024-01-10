@@ -19,4 +19,15 @@ class AdminController extends Controller
             return redirect()->route('home');
         }
     }
+
+    public function destroy(Score $score)
+    {
+        // dd($score);
+        $score->delete();
+        return redirect()->route('admin')
+            ->with('success', 'Profile deleted successfully.');
+    }
+    public function edit()
+    {
+    }
 }
