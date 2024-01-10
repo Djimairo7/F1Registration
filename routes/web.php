@@ -28,8 +28,9 @@ Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@subm
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/profiles', 'profilescontroller@store')->name('profiles.store');
 Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-Route::get('/admin/delete', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.delete');
-Route::post('/admin/delete', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.delete');
+Route::delete('/admin/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+
+
 
 
 // add aan het einde van de register routes later

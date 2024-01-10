@@ -60,7 +60,7 @@
                                     </td>
                                 </form>
                                 <td>
-                                    <form action="{{ route('admin.delete', $score->id) }}" method=" POST">
+                                    <form action="{{ route('admin.delete', $score->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="m-2 bg-dark text-white">Verwijder</button>

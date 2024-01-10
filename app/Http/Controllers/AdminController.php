@@ -20,9 +20,10 @@ class AdminController extends Controller
         }
     }
 
-    public function destroy(Score $score)
+    public function delete($id)
     {
         // dd($score);
+        $score = Score::findorFail($id);
         $score->delete();
         return redirect()->route('admin')
             ->with('success', 'Profile deleted successfully.');
