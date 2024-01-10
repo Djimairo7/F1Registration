@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification; // Import the Notification model class
+use App\Models\Score; // Import the Score class from the correct namespace
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -61,12 +62,16 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         }
+        // Get the leaderboard data
+        $users = Score::where('race_name', $currentRace['raceName'])->orderBy('score', 'desc')->get();
 
 
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
+        $this->app->instance('currentRace', $currentRace);
         view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
         view()->share('currentRace', $currentRace);
+        view()->share('users', $users);
     }
 }

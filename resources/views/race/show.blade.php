@@ -45,6 +45,9 @@
                                 <input type="text" id="timeInput"
                                     class="form-control form-control-lg bg-secondary text-white border-0 text-center"
                                     placeholder="Gereden Tijd" name="Time" maxlength="6">
+                                @error('Time')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
                                 <div class="custom-file">
@@ -54,7 +57,6 @@
                                         class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
                                         for="UplRaceImg">
                                         Upload Image
-
                                     </label>
                                     @error('UplRaceImg')
                                         <div class="text-danger">{{ $message }}</div>
@@ -91,28 +93,4 @@
             @endforeach
         </tbody>
     </table>
-    <script>
-        document.getElementById('timeInput').addEventListener('input', function(e) { //the layout of the score
-            var input = e.target.value;
-            input = input.replace(/\D/g, ""); // Remove non-digits
-            input = input.replace(/^(\d{1})(\d{2})(\d{3})$/, "$1.$2.$3"); // Add dots
-            e.target.value = input;
-        });
-
-        document.getElementById('UplRaceImg').addEventListener('change', function(e) {
-            var fileName = e.target.files[0].name;
-            document.querySelector('label[for="UplRaceImg"]').textContent = fileName;
-        });
-    </script>
-
-
-
-
-    {{-- <div class="text-white">
-        <h1>{{ $race['raceName'] }}</h1>
-        <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
-        <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
-        <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
-        <p class="my-1 mx-2">{{ $race['date'] }}</p>
-    </div> --}}
 @endsection

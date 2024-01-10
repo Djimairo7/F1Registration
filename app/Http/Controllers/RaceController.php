@@ -29,16 +29,17 @@ class RaceController extends Controller
         }
 
         // Get the leaderboard data
-        $users = Score::where('race_name', $raceName)->orderBy('score', 'desc')->get();
 
-        $scores = Score::with('user')->where('race_name', $raceName)->get();
-
-        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race', 'users', 'scores'));
+        $scores = Score::with('user')
+            ->where('race_name', $raceName)
+            ->orderBy('score', 'asc')
+            ->get();
+        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race', 'scores'));
     }
     public function submitScore(Request $request, $raceName)
     {
         $request->validate([
-            'Time' => 'required|min:6|max:6',
+            'Time' => 'required|regex:/^\d\.\d{2}\.\d{3}$/',
             'UplRaceImg' => 'required|image',
         ]);
 
