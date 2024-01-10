@@ -36,6 +36,7 @@ class HomeController extends Controller
 
         $scores = Score::with('user')
             ->where('race_name', Str::slug(app('currentRace')['Circuit']['circuitName']))
+            ->orderBy('score', 'asc')
             ->get();
 
         // Retrieve notifications of the current user

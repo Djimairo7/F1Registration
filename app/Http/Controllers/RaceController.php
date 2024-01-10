@@ -29,8 +29,11 @@ class RaceController extends Controller
         }
 
         // Get the leaderboard data
-        $scores = Score::with('user')->where('race_name', $raceName)->get();
 
+        $scores = Score::with('user')
+            ->where('race_name', $raceName)
+            ->orderBy('score', 'asc')
+            ->get();
         return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race', 'scores'));
     }
     public function submitScore(Request $request, $raceName)
