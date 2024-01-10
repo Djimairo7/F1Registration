@@ -27,9 +27,9 @@ Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@subm
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/profiles', 'profilescontroller@store')->name('profiles.store');
-Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
-
+Route::put('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');
 
 
 

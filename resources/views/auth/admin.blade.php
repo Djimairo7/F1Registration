@@ -45,18 +45,19 @@
                             <tr>
                                 <th scope="row">{{ $score->race_name }}</th>
                                 <td>{{ $score->user->username }}</td>
-                                <form action="" method="POST">
+                                <form action="{{ route('admin.update', $score->id) }}" method="POST">
                                     @csrf
+                                    @method('PUT')
+
                                     <td>
-                                        <input type="text" value="{{ $score->score }}" />
+                                        <input type="text" name="score" value="{{ $score->score }}" />
                                     </td>
                                     <td>
                                         <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
                                             height="50">
                                     </td>
                                     <td>
-                                        <button type="submit" method="POST" action=""
-                                            class="m-2 bg-dark text-white">Verander</button>
+                                        <button type="submit" class="m-2 bg-dark text-white">Verander</button>
                                     </td>
                                 </form>
                                 <td>

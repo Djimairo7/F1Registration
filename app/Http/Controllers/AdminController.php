@@ -28,7 +28,21 @@ class AdminController extends Controller
         return redirect()->route('admin')
             ->with('success', 'Record deleted successfully.');
     }
-    public function edit()
+    public function update(Request $request, $id)
     {
+        // Validate the request data
+        $request->validate([
+            'score' => 'required',
+            // Add other validation rules as needed
+        ]);
+
+        // Find the Score with the given ID
+        $score = Score::findOrFail($id);
+
+        // Update the Score with the request data
+        $score->update($request->all());
+
+        // Redirect back with a success message
+        return redirect()->route('admin')->with('success', 'Score updated successfully');
     }
 }
