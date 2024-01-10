@@ -17,7 +17,7 @@ class CreateScoresTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->text('race_name');
-            $table->decimal('score', 10, 3);
+            $table->string('score');
             $table->mediumText('image')->nullable(); // Add this line
             $table->timestamps();
 

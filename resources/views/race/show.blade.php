@@ -45,6 +45,9 @@
                                 <input type="text" id="timeInput"
                                     class="form-control form-control-lg bg-secondary text-white border-0 text-center"
                                     placeholder="Gereden Tijd" name="Time" maxlength="6">
+                                @error('Time')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
                                 <div class="custom-file">
@@ -54,7 +57,6 @@
                                         class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
                                         for="UplRaceImg">
                                         Upload Image
-
                                     </label>
                                     @error('UplRaceImg')
                                         <div class="text-danger">{{ $message }}</div>

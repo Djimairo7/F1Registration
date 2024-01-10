@@ -38,7 +38,7 @@ class RaceController extends Controller
     public function submitScore(Request $request, $raceName)
     {
         $request->validate([
-            'Time' => 'required|min:6|max:6',
+            'Time' => 'required|regex:/^\d\.\d{2}\.\d{3}$/',
             'UplRaceImg' => 'required|image',
         ]);
 
