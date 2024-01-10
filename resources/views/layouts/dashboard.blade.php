@@ -33,7 +33,12 @@
                                             ->first();
                                     @endphp
                                     <div class="col-auto">
-                                        <p class="m-0">Tijd: {{ $lowestScore->score }}</p>
+                                        @if (!empty($lowestScore))
+                                            <p class="m-0">Tijd: {{ $lowestScore->score }}</p>
+                                        @else
+                                            <p class="m-0">Tijd: N/A</p>
+                                        @endif
+                                        {{-- <p class="m-0">Tijd: {{ $lowestScore->score }}</p> --}}
                                     </div>
                                 </div>
                                 <hr>
