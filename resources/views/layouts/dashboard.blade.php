@@ -16,8 +16,8 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h5 class="card-title">{{ $fullName }}</h5>
-                                    <p class="card-text">@JohnDoe60</p>
-                                    <!-- <p class="card-text">Username: {{ $username }}</p> -->
+                                    {{-- <p class="card-text">@JohnDoe60</p> --}}
+                                    <p class="card-text">Username: {{ $username }}</p>
                                     <p class="card-text">Point Count: 54</p>
                                 </div>
                                 <hr>
@@ -25,8 +25,15 @@
                                     <div class="col-auto">
                                         <p class="m-0">{{ $currentRace['Circuit']['circuitName'] }}</p>
                                     </div>
+                                    @php
+                                        $lowestScore = \App\Models\Score::with('user')
+                                            ->where('race_name', Str::slug(app('currentRace')['Circuit']['circuitName']))
+                                            ->where('user_id', auth()->id())
+                                            ->orderBy('score', 'asc')
+                                            ->first();
+                                    @endphp
                                     <div class="col-auto">
-                                        <p class="m-0">Tijd: 1.23.456</p>
+                                        <p class="m-0">Tijd: {{ $lowestScore->score }}</p>
                                     </div>
                                 </div>
                                 <hr>
