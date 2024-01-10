@@ -16,12 +16,12 @@ class CreateScoresTable extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('race_id');
-            $table->decimal('score', 10, 3);
+            $table->text('race_name');
+            $table->string('score');
+            $table->mediumText('image')->nullable(); // Add this line
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            // $table->foreign('race_id')->references('id')->on('races');
         });
     }
 

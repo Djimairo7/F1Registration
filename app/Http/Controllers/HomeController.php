@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
-use Illuminate\Support\Facades\Http; // Import the Http facade
-use Illuminate\Support\Facades\File; // Import the File facade
-use Illuminate\Support\Str; // Import the Str facade
-
+use App\Models\Notification; // Import the Notification model class
+use Illuminate\Support\Facades\App;
+use App\Models\Score; // Import the Score class from the correct namespace
+use Illuminate\Support\Str; // Import the Str class from the correct namespace
 class HomeController extends Controller
 {
     /**
@@ -26,29 +26,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
         $fullName = $user->name;
         $username = $user->username;
         $pointCount = $user->point_count;
 
-        $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
-        $getRaces = $racesreq->json();
+        $races = App::make('races');
+        $drivers = App::make('drivers');
 
-        $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
-        $getDrivers = $driversreq->json();
+        $scores = Score::with('user')
+            ->where('race_name', Str::slug(app('currentRace')['Circuit']['circuitName']))
+            ->orderBy('score', 'asc')
+            ->get();
 
-        // dd($getRaces, $getDrivers);
+        // Retrieve notifications of the current user
+        $notifications = Notification::where('user_id', $user->id)->get();
 
-        // Get the corresponding race preview image for each race
-        $raceImages = [];
-        foreach ($getRaces['MRData']['RaceTable']['Races'] as $race) {
-            $countryName = Str::slug($race['Circuit']['Location']['country']);
-            $imageName = str_replace('-', '%20', Str::slug($race['Circuit']['Location']['country'])) . '.png'; //convert - to %20 for compatibility with the URL
-            $imageUrl = 'https://media.formula1.com/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/' . $imageName;
-            $raceImages[$countryName] = $imageUrl;
-        }
-
-        return view('home', compact('fullName', 'username', 'pointCount', 'getRaces', 'getDrivers', 'raceImages'));
+        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'notifications', 'scores'));
     }
 }

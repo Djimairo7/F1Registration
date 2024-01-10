@@ -22,3 +22,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/discover', [App\Http\Controllers\DiscoverController::class, 'index'])->name('discover');
+Route::get('/race/{raceName}', 'App\Http\Controllers\RaceController@show')->name('race.show');
+Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@submitScore')->name('race.submit');
