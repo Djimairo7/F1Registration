@@ -31,21 +31,31 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                <form class="text-center" method="POST" action="#">
+                                <form class="text-center" method="POST"
+                                    action="{{ route('race.submit', ['raceName' => Str::slug($currentRace['Circuit']['circuitName'])]) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <h2 class="mb-4">Tijd Toevoegen</h2>
                                     <div class="form-group">
-                                        <input type="text"
+                                        <input type="text" id="timeInput"
                                             class="form-control form-control-lg bg-secondary text-white border-0 text-center"
-                                            placeholder="Gereden Tijd" name="Time">
+                                            placeholder="Gereden Tijd" name="Time" maxlength="6">
+                                        @error('Time')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group mt-3">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="UplRaceImg"
                                                 name="UplRaceImg" hidden>
                                             <label
-                                                class="custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
-                                                for="UplRaceImg">Upload Image</label>
+                                                class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
+                                                for="UplRaceImg">
+                                                Upload Image
+                                            </label>
+                                            @error('UplRaceImg')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
@@ -56,9 +66,32 @@
                         <p>No race is scheduled currently.</p>
                     @endif
                 @else
-                    <p>No races found.</p>
+                    <p>No race found.</p>
                 @endif
             </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($scores as $index => $score)
+                        <tr>
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{ $score->user->username }}</td>
+                            <td>{{ $score->score }}</td>
+                            <td>
+                                <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
+                                    height="50">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -169,6 +202,17 @@
                 }
             }
         }
+        document.getElementById('timeInput').addEventListener('input', function(e) { //the layout of the score
+            var input = e.target.value;
+            input = input.replace(/\D/g, ""); // Remove non-digits
+            input = input.replace(/^(\d{1})(\d{2})(\d{3})$/, "$1.$2.$3"); // Add dots
+            e.target.value = input;
+        });
+
+        document.getElementById('UplRaceImg').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            document.querySelector('label[for="UplRaceImg"]').textContent = fileName;
+        });
     </script>
 
 @endsection
