@@ -67,8 +67,6 @@ class DiscoverController extends Controller
 
             $allUsers = User::all(); // Retrieve all users
 
-
-
             return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
         } else {
             // User is not authenticated, handle accordingly
