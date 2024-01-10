@@ -35,26 +35,23 @@
                     <div class="card bg-black text-white p-2">
                         <div class="card-header">Users</div>
                         <div class="card-body">
-                            <form action="" method="POST">
-                                <div class="input-group mb-3">
-                                    @foreach ($allusers as $user)
-
-                                    <div class="form-group mb-3">
-
-                                        <form action="/admin">
+                            <div class=" d-flex flex-column input-group mb-3">
+                                @foreach ($allusers as $user)
+                                <div class="form-group mb-3">
+                                    <form action="{{ ('update') }}" method="post">
+                                        <div class="d-flex flex-row">
                                             <input value="{{ $user->username }}" class="">
 
                                             </input>
-                                            @endforeach
-                                        </form>
-                                    </div>
-                                    <div>
-                                        <button type="submit" action="POST">
-                                            submit
-                                        </button>
-                                    </div>
+                                            <button type="submit" class="">
+                                                submit
+                                            </button>
+
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,4 +59,5 @@
         </div>
     </div>
 </div>
+
 @endsection
