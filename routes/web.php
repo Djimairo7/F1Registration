@@ -22,6 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/discover', [App\Http\Controllers\DiscoverController::class, 'index'])->name('discover');
+Route::get('/race/{raceName}', 'App\Http\Controllers\RaceController@show')->name('race.show');
+Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@submitScore')->name('race.submit');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/profiles', 'profilescontroller@store')->name('profiles.store');
