@@ -1,62 +1,67 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 
 
-@section('content')
+@section('dashboard-content')
 
-<div class="container bg-secondary">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="d-flex flex-md-column m-2">
-                <div class="col-8 col-md-12 mb-2">
-                    <div class="card bg-black text-white p-2">
-                        <div class="card-header">{{ __('First Card') }}</div>
-                        <div class="card-body">
-                            <div class="text-center">
-
-                                <img src="https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
-                            </div>
-
-                            {{-- <h5 class="card-title">gay</h5> --}}
-                            <p class="card-text">@JohnDoe60</p>
-                            {{-- <p class="card-text">Username: {{ $username }}</p> --}}
-                            <p class="card-text">Point Count: 54</p>
-                            {{-- <p class="card-text">Point Count: {{ $pointCount }}</p> --}}
-                            <a href="#" class="btn btn-danger">Edit Profile</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="d-flex flex-wrap flex-md-column m-2">
-                <div class="col-8 col-md-12 mb-2">
-                    <div class="card bg-black text-white p-2">
-                        <div class="card-header">Users</div>
-                        <div class="card-body">
-                            <div class=" d-flex flex-column input-group mb-3">
-                                @foreach ($allusers as $user)
+<div class="card bg-black text-white p-2">
+    <div class="card-header">Users</div>
+    <div class="card-body">
+        <div class=" d-flex flex-column input-group mb-3">
+            {{-- @foreach ($allusers as $user)
                                 <div class="form-group mb-3">
                                     <form action="{{ ('update') }}" method="post">
-                                        <div class="d-flex flex-row">
-                                            <input value="{{ $user->username }}" class="">
+            <div class="d-flex flex-row">
+                <input value="{{ $user->username }}" class="">
 
-                                            </input>
-                                            <button type="submit" class="">
-                                                submit
-                                            </button>
+                </input>
 
-                                        </div>
-                                    </form>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
+            </form>
         </div>
+        @endforeach --}}
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">RaceName</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($scores as $index => $score)
+
+                <tr>
+                    <th scope="row">{{ $score->race_name }}</th>
+                    <td>{{ $score->user->username }}</td>
+                    <form action="{{ route('scores.edit')}}" method="POST">
+                        @csrf
+                        <td>
+                            <input type="text" value="{{ $score->score }}" />
+                        </td>
+                        <td>
+                            <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50" height="50">
+                        </td>
+                        <td>
+                            <button type="submit" method="POST" action="" class="m-2 bg-dark text-white">Verander</button>
+                        </td>
+                    </form>
+                    <form action="">
+                        <td>
+                            @csrf
+                            @method('DELETE')
+                            <button type="" method="POST" action="{{ route('scores.delete') }}" class="m-2 bg-dark text-white">Verwijder</button>
+                        </td>
+                    </form>
+                </tr>
+
+
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 </div>
 
