@@ -40,7 +40,8 @@ class AdminController extends Controller
         $score = Score::findOrFail($id);
 
         // Update the Score with the request data
-        $score->update($request->all());
+        $score->score = $request->score;
+        $score->save();
 
         // Redirect back with a success message
         return redirect()->route('admin')->with('success', 'Score updated successfully');
