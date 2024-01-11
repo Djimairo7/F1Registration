@@ -28,6 +28,10 @@
                             <th scope="col">Name</th>
                             <th scope="col">Score</th>
                             <th scope="col">Image</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col">ChangeRecord</th>
+                            <th scope="col">DeleteRecord</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +59,12 @@
                                     <td>
                                         <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
                                             height="50">
+                                    </td>
+                                    <td>
+                                        created date
+                                    </td>
+                                    <td>
+                                        update
                                     </td>
                                     <td>
                                         <button type="submit" class="m-2 bg-dark text-white">Verander</button>
