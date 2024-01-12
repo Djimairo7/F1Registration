@@ -61,7 +61,7 @@
                                         <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
                                             height="50">
                                     </td>
-                                    <td class="text-center">
+                                    <td class="">
                                         {{ $score->created_at }}
                                     </td>
                                     <td class="">
