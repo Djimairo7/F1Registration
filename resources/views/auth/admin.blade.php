@@ -53,6 +53,7 @@
                                     @csrf
                                     @method('PUT')
 
+
                                     <td>
                                         <input type="text" name="score" value="{{ $score->score }}" />
                                     </td>
@@ -60,11 +61,11 @@
                                         <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
                                             height="50">
                                     </td>
-                                    <td>
-                                        created date
+                                    <td class="text-center">
+                                        {{ $score->created_at }}
                                     </td>
-                                    <td>
-                                        update
+                                    <td class="">
+                                        {{ $score->updated_at }}
                                     </td>
                                     <td>
                                         <button type="submit" class="m-2 bg-dark text-white">Verander</button>
