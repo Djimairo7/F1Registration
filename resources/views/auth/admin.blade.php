@@ -55,7 +55,7 @@
 
 
                                     <td>
-                                        <input type="text" name="score" value="{{ $score->score }}" />
+                                        <input class="col-9" type="text" name="score" value="{{ $score->score }}" />
                                     </td>
                                     <td>
                                         <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"
