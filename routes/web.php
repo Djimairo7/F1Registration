@@ -18,7 +18,6 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
 Route::get('/discover', [App\Http\Controllers\DiscoverController::class, 'index'])->name('discover');

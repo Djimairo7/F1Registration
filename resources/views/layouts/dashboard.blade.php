@@ -23,19 +23,26 @@
                                 <div class="col-auto">
                                     <p class="m-0">{{ $currentRace['Circuit']['circuitName'] }}</p>
                                 </div>
-                                @php
-                                $lowestScore = \App\Models\Score::with('user')
-                                ->where('race_name', Str::slug(app('currentRace')['Circuit']['circuitName']))
-                                ->where('user_id', auth()->id())
-                                ->orderBy('score', 'asc')
-                                ->first();
-                                @endphp
-                                <div class="col-auto">
-                                    @if (!empty($lowestScore))
-                                    <p class="m-0">Tijd: {{ $lowestScore->score }}</p>
-                                    @else
-                                    <p class="m-0">Tijd: N/A</p>
-                                    @endif
+                                <hr>
+                                <div class="row justify-content-between">
+                                    <div class="col-auto">
+                                        <p class="m-0">{{ $currentRace['Circuit']['circuitName'] }}</p>
+                                    </div>
+                                    @php
+                                        $lowestScore = \App\Models\Score::with('user')
+                                            ->where('race_name', Str::slug(app('currentRace')['Circuit']['circuitName']))
+                                            ->where('user_id', auth()->id())
+                                            ->orderBy('score', 'asc')
+                                            ->first();
+                                    @endphp
+                                    <div class="col-auto">
+                                        @if (!empty($lowestScore))
+                                            <p class="m-0">Tijd: {{ $lowestScore->score }}</p>
+                                        @else
+                                            <p class="m-0">Tijd: N/A</p>
+                                        @endif
+                                        {{-- <p class="m-0">Tijd: {{ $lowestScore->score }}</p> --}}
+                                    </div>
                                 </div>
                             </div>
                             <hr>
