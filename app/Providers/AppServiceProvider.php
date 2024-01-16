@@ -51,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
         // $currentDate = now(); // set back to the current date
 
         $currentRace = null; //set the current race to null for fallback
+        $currentRaceStartDate = null; //set the current race to null for fallback
+        $currentRaceEndDate = null; //set the current race to null for fallback
         if (!empty($races)) {
             foreach ($races['MRData']['RaceTable']['Races'] as $key => $race) {
                 $raceStartDate = \Carbon\Carbon::parse($race['date']); //set the start date to the start date of a race
@@ -58,6 +60,8 @@ class AppServiceProvider extends ServiceProvider
                 if ($currentDate->between($raceStartDate, $raceEndDate)) {
                     //check the race start and the race end date to see if the current date is in between them
                     $currentRace = $race; //set the current race to the race that currently going on
+                    $currentRaceStartDate = $raceStartDate;
+                    $currentRaceEndDate = $raceEndDate;
                     break;
                 }
             }
@@ -69,6 +73,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
         $this->app->instance('currentRace', $currentRace);
+        $this->app->instance('currentRaceStartDate', $currentRaceStartDate);
+        $this->app->instance('currentRaceEndDate', $currentRaceEndDate);
         view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
         view()->share('currentRace', $currentRace);

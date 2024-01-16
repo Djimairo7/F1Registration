@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Race extends Model
 {
@@ -15,6 +16,10 @@ class Race extends Model
     }
     public function calculatePoints()
     {
+        // save the current dates for later, where i need to add the points to the users table if the current date isn't in between these dates but it only has to happen once
+        $currentRaceStartDate = App::make('currentRaceStartDate');
+        $currentRaceEndDate = App::make('currentRaceEndDate');
+
         // Define the points for each position
         $positionPoints = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
 
