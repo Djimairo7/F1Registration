@@ -41,11 +41,16 @@ class AppServiceProvider extends ServiceProvider
         // Get the corresponding race preview image for each race
         $raceImages = [];
         foreach ($races['MRData']['RaceTable']['Races'] as $race) {
-            $countryName = Str::slug($race['Circuit']['Location']['country']);
-            $imageName = str_replace('-', '%20', Str::slug($race['Circuit']['Location']['country'])) . '.png'; //convert - to %20 for compatibility with the URL
+            $raceName = str_replace('Grand Prix', '', $race['raceName']);
+            $imageName = str_replace('-', '%20', $raceName) . '%20carbon.png'; //convert - to %20 for compatibility with the URL
             $imageUrl = 'https://media.formula1.com/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/' . $imageName;
-            $raceImages[$countryName] = $imageUrl;
+            $raceImages[] = $imageUrl;
         };
+
+        dd($races['MRData']['RaceTable']['Races']);
+
+        // https://media.formula1.com/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Emilia%20Romagna%20carbon.png
+        // https://media.formula1.com/content/dam/fom-website/2018-redesign-assets/Track%20icons%204x3/Great%20Britain%20carbon.png
 
         $currentDate = \Carbon\Carbon::parse('2024-09-22'); //set custom date
         // $currentDate = now(); // set back to the current date
