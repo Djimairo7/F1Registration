@@ -20,6 +20,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->boolean('IsAdmin')->default(false);
             $table->timestamps();
+            // Move this to the correct table where points should be
+            $table->integer('points')->default(0);
         });
     }
 
