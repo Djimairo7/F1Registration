@@ -58,7 +58,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
+                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen</button>
                                 </form>
                             </div>
                         </div>
