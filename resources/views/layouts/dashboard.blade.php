@@ -15,9 +15,9 @@
                                         style="width: 150px; height: 150px;">
                                 </div>
                                 <div class="col-md-8">
-                                    <h5 class="card-title">{{ $fullName }}</h5>
-                                    {{-- <p class="card-text">@JohnDoe60</p> --}}
-                                    <p class="card-text">Username: {{ $username }}</p>
+                                    {{-- <h5 class="card-title">{{ $fullName }}</h5> --}}
+                                    <p class="card-text">@JohnDoe60</p>
+                                    {{-- <p class="card-text">Username: {{ $username }}</p> --}}
                                     <p class="card-text">Point Count: 54</p>
                                 </div>
                                 <hr>
