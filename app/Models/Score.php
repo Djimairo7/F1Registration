@@ -12,4 +12,9 @@ class Score extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $dispatchesEvents = [
+        'created' => \App\Events\ScoreCreated::class,
+        'updated' => \App\Events\ScoreUpdated::class,
+    ];
 }
