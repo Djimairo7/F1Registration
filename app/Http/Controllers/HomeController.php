@@ -29,7 +29,7 @@ class HomeController extends Controller
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
         $fullName = $user->name;
         $username = $user->username;
-        $pointCount = $user->point_count;
+        $points = $user->points;
 
         $races = App::make('races');
         $drivers = App::make('drivers');
@@ -42,6 +42,6 @@ class HomeController extends Controller
         // Retrieve notifications of the current user
         $notifications = Notification::where('user_id', $user->id)->get();
 
-        return view('home', compact('fullName', 'username', 'pointCount', 'races', 'drivers', 'notifications', 'scores'));
+        return view('home', compact('fullName', 'username', 'points', 'races', 'drivers', 'notifications', 'scores'));
     }
 }
