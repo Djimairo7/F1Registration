@@ -2,7 +2,7 @@
 
 @section('dashboard-content')
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header bg-danger">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
@@ -96,7 +96,7 @@
     </div>
 
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
