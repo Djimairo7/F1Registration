@@ -68,9 +68,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 my-2">
+            <div class="col-12 col-md-8 order-3 order-md-3 my-2">
+                <!-- Third Part -->
                 <div class="d-flex flex-wrap flex-md-column m-2">
-                    <div class="col-8 col-md-12 mb-2">
+                    <div class="col-12 mb-2">
                         @yield('dashboard-content')
                     </div>
                 </div>
