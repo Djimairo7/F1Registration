@@ -29,6 +29,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
+
+
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -50,8 +52,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'email' => [
+                'required', 'string', 'email', 'max:255',
+                function ($attribute, $value, $fail) {
+                    $allowedDomains = ['windesheim.nl', 'student.windesheim.nl']; // Replace with your allowed domains
+                    $domain = explode('@', $value)[1];
+                    if (!in_array($domain, $allowedDomains)) {
+                        $fail('The selected email is invalid.');
+                    }
+                },
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,9 +76,11 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+
+            // session()->flash('message', 'Registered succesfully.')
         ]);
     }
 }
