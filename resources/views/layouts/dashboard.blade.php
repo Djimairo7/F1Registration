@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container bg-secondary">
+    <div class="container bg-secondary rounded">
         <div class="row">
             <div class="col-md-4 my-2">
                 <div class="d-flex flex-wrap flex-md-column m-2">
