@@ -2,7 +2,7 @@
 
 @section('dashboard-content')
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header bg-danger">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
@@ -58,7 +58,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Opslaan</button>
+                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen</button>
                                 </form>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                     <p>No race found.</p>
                 @endif
             </div>
-            <table class="table table-striped">
+            <table class="table table-striped table-dark">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -96,7 +96,7 @@
     </div>
 
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="card my-2 bg-black text-white">
+    <div class="card mb-2 bg-black text-white">
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"

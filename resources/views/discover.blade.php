@@ -1,15 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('dashboard-content')
-
     <div class="card bg-black text-white p-2">
         <div class="card-header">{{ __('Search') }}</div>
         <div class="card-body">
             <form action="{{ route('discover') }}" method="GET">
                 <div class="input-group mb-3">
-                    <input type="search" class="form-control" placeholder="Search..." name="query"
-                        value="{{ request()->input('query') }}">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <input type="search" class="form-control bg-secondary border-0 text-white" placeholder="Search..."
+                        name="query" value="{{ request()->input('query') }}">
+                    <button class="btn btn-danger btn-primary" type="submit">Search</button>
                 </div>
             </form>
             <div class="search-results">
@@ -18,10 +17,10 @@
                     <div class="card-container overflow-x-scroll">
                         <div class="d-inline-flex">
                             @foreach ($filteredUsers as $user)
-                                <div class="card m-2 d-inline-grid flex-shrink-0">
+                                <div class="card m-2 d-inline-grid flex-shrink-0 bg-secondary">
                                     <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title text-nowrap">{{ $user->username }}</h5>
-                                        <a href="#" class="btn btn-primary mt-auto">
+                                        <h5 class="card-title text-nowrap text-white">{{ $user->username }}</h5>
+                                        <a href="#" class="btn btn-danger btn-primary mt-auto">
                                             View Details
                                         </a>
                                     </div>
@@ -38,18 +37,18 @@
                     <div class="d-inline-flex">
                         @if (!empty($filteredRaces))
                             @foreach ($filteredRaces as $race)
-                                <div class="card m-2 d-inline-grid flex-shrink-0">
+                                <div class="card m-2 d-inline-grid flex-shrink-0 bg-secondary">
                                     <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title text-nowrap">{{ $race['raceName'] }}</h5>
-                                        <p class="card-text text-nowrap">Locality:
+                                        <h5 class="card-title text-nowrap text-white">{{ $race['raceName'] }}</h5>
+                                        <p class="card-text text-nowrap text-white">Locality:
                                             {{ $race['Circuit']['Location']['locality'] }}</p>
-                                        <p class="card-text text-nowrap">Circuit Name:
+                                        <p class="card-text text-nowrap text-white">Circuit Name:
                                             {{ $race['Circuit']['circuitName'] }}</p>
-                                        <p class="card-text text-nowrap">Country:
+                                        <p class="card-text text-nowrap text-white">Country:
                                             {{ $race['Circuit']['Location']['country'] }}</p>
-                                        <p class="card-text text-nowrap">Date: {{ $race['date'] }}</p>
+                                        <p class="card-text text-nowrap text-white">Date: {{ $race['date'] }}</p>
                                         <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                            class="btn btn-primary mt-auto">
+                                            class="btn btn-primary mt-auto btn-danger">
                                             View Details
                                         </a>
                                     </div>
@@ -66,17 +65,17 @@
                     <div class="d-inline-flex">
                         @if (!empty($filteredDrivers))
                             @foreach ($filteredDrivers as $driver)
-                                <div class="card m-2 d-inline-grid flex-shrink-0">
+                                <div class="card m-2 d-inline-grid flex-shrink-0 bg-secondary">
                                     <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title text-nowrap">{{ $driver['givenName'] }}
+                                        <h5 class="card-title text-nowrap text-white">{{ $driver['givenName'] }}
                                             {{ $driver['familyName'] }}
                                         </h5>
-                                        <p class="card-text text-nowrap">Nationality:
+                                        <p class="card-text text-nowrap text-white">Nationality:
                                             {{ $driver['nationality'] }}</p>
                                         </p>
-                                        <p class="card-text text-nowrap">Number:
+                                        <p class="card-text text-nowrap text-white">Number:
                                             {{ $driver['permanentNumber'] }}</p>
-                                        <a href="#" class="btn btn-primary mt-auto">
+                                        <a href="#" class="btn btn-danger btn-primary mt-auto">
                                             View Details
                                         </a>
                                     </div>
@@ -89,5 +88,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection

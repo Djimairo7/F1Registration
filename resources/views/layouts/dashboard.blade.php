@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container bg-secondary">
+    <div class="container bg-secondary rounded">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 my-2">
                 <div class="d-flex flex-wrap flex-md-column m-2">
                     <div class="col-8 col-md-12 mb-2">
                         <div class="card bg-black text-white p-2">
@@ -15,9 +15,9 @@
                                         style="width: 150px; height: 150px;">
                                 </div>
                                 <div class="col-md-8">
-                                    <h5 class="card-title">{{ $fullName }}</h5>
-                                    {{-- <p class="card-text">@JohnDoe60</p> --}}
-                                    <p class="card-text">Username: {{ $username }}</p>
+                                    {{-- <h5 class="card-title">{{ $fullName }}</h5> --}}
+                                    <p class="card-text">@JohnDoe60</p>
+                                    {{-- <p class="card-text">Username: {{ $username }}</p> --}}
                                     <p class="card-text">Point Count: 54</p>
                                 </div>
                                 <hr>
@@ -51,23 +51,27 @@
                             <div class="card-header">{{ __('Notifications') }}</div>
                             <div class="card-body overflow-auto">
                                 @foreach ($notifications as $notification)
-                                    <div class="btn bg-secondary d-flex justify-content-between align-items-center">
+                                    <form action="{{ route('notification.destroy', $notification->id) }}" method="POST"
+                                        class="btn bg-secondary d-flex justify-content-between align-items-center my-1">
+                                        @csrf
+                                        @method('DELETE')
                                         <a href="#" class="nav-link">
                                             <p class="my-1 mx-2">{{ $notification->message }}</p>
                                         </a>
-                                        <a href="#" class="text-danger">
+                                        <button type="submit" class="btn text-danger">
                                             <i class="fas fa-trash ml-2"></i>
-                                        </a>
-                                    </div>
+                                        </button>
+                                    </form>
                                 @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-12 col-md-8 order-3 order-md-3 my-2">
+                <!-- Third Part -->
                 <div class="d-flex flex-wrap flex-md-column m-2">
-                    <div class="col-8 col-md-12 mb-2">
+                    <div class="col-12 mb-2">
                         @yield('dashboard-content')
                     </div>
                 </div>
