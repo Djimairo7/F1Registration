@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $user = auth()->user();
+    $profile = $user->profile;
+@endphp
+
 @section('content')
     <div class="container bg-secondary rounded">
         <div class="row">
@@ -15,14 +20,13 @@
                             <div class="card-header">{{ __('First Card') }}</div>
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp"
-                                        alt="Profile Picture" class="img-fluid rounded-circle"
-                                        style="width: 150px; height: 150px;">
+                                    <img src="data:image/png;base64,{{ $profile->profile_picture }}" alt="Profile Picture"
+                                        class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
                                 </div>
                                 <div class="col-md-8">
-                                    {{-- <h5 class="card-title">{{ $fullName }}</h5> --}}
-                                    <p class="card-text">@JohnDoe60</p>
-                                    {{-- <p class="card-text">Username: {{ $username }}</p> --}}
+                                    <h5 class="card-title">{{ $profile->first_name }}
+                                        {{ auth()->user()->profile->last_name }}</h5>
+                                    <p class="card-text">{{ '@' . $user->username }}</p>
                                     <p class="card-text">Point Count: 54</p>
                                 </div>
                                 <hr>
