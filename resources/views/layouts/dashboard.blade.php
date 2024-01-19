@@ -23,7 +23,8 @@
                         <div class="card bg-black text-white p-2">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="{{ $profile->profile_picture ? 'data:image/png;base64,' . $profile->profile_picture : 'https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp' }}"
+                                    <img
+                                        src="{{ $profile->profile_picture ? 'data:image/png;base64,' . $profile->profile_picture : 'https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp' }}"
                                         alt="Profile Picture" class="img-fluid rounded-circle"
                                         style="width: 150px; height: 150px;">
                                 </div>
@@ -31,7 +32,7 @@
                                     <h5 class="card-title">{{ $profile->first_name ?? '' }}
                                         {{ $profile->last_name ?? '' }}</h5>
                                     <p class="card-text">{{ '@' . $user->username }}</p>
-                                    <p class="card-text">Point Count: 54</p>
+                                    <p class="card-text">Point Count: {{ $profile->points ?? 'N/A' }}</p>
                                     <p>{{ $profile->bio ? '"' . $profile->bio . '"' : '' }}</p>
                                 </div>
                                 <hr>
@@ -72,7 +73,7 @@
                             <div class="card-body overflow-auto">
                                 @foreach ($notifications as $notification)
                                     <form action="{{ route('notification.destroy', $notification->id) }}" method="POST"
-                                        class="btn bg-secondary d-flex justify-content-between align-items-center my-1">
+                                          class="btn bg-secondary d-flex justify-content-between align-items-center my-1">
                                         @csrf
                                         @method('DELETE')
                                         <a href="#" class="nav-link">

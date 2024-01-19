@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Score; // Import the Score class from the correct namespace
+use App\Models\Score;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request; // Import the Request class from the correct namespace
+use Illuminate\Support\Str;
 
 class RaceController extends Controller
 {
-    //
     public function show($raceName)
     {
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
@@ -36,6 +35,7 @@ class RaceController extends Controller
             ->get();
         return view('race.show', compact('user', 'fullName', 'username', 'points', 'race', 'scores'));
     }
+
     public function submitScore(Request $request, $raceName)
     {
         $request->validate([

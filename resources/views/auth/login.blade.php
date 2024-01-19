@@ -17,8 +17,8 @@
                                     Email
                                 </label>
                                 <input value="{{ old('email') }}" type="email" name="email"
-                                    class="form-control bg-secondary text-white" placeholder="Vul hier je email in"
-                                    required>
+                                       class="form-control bg-secondary text-white" placeholder="Vul hier je email in"
+                                       required>
 
                             </div>
                             <div class="form-group mb-3">
@@ -26,12 +26,12 @@
                                     Wachtwoord
                                 </label>
                                 <input type="password" id="password" name="password"
-                                    class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in"
-                                    required>
+                                       class="form-control bg-secondary text-white" placeholder="Vul je wachtwoord in"
+                                       required>
                             </div>
                             <div>
                                 <button type="submit"
-                                    class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
+                                        class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
                                     Login
                                 </button>
                             </div>
@@ -40,7 +40,7 @@
                                     account? Registreer hier</a>
                             </div>
                             <a href="/reset-password"
-                                class=" d-flex justify-content-center text-white font-weight-bold text-decoration-none">
+                               class=" d-flex justify-content-center text-white font-weight-bold text-decoration-none">
                                 Wachtwoord Vergeten?
 
                             </a>
@@ -51,6 +51,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

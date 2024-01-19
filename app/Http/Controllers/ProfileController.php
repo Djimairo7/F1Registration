@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends Controller
@@ -30,6 +29,7 @@ class ProfileController extends Controller
 
         return response()->view('profile', compact('user'));
     }
+
     public function create()
     {
         $user = Auth::user();
@@ -59,7 +59,6 @@ class ProfileController extends Controller
             'bio' => 'nullable',
             'profile_picture' => 'nullable|image',
         ]);
-
 
 
         // Handle profile picture upload
@@ -131,6 +130,7 @@ class ProfileController extends Controller
             throw new NotFoundHttpException('Het profiel is niet gevonden. :(');
         }
     }
+
     public function show($user_id)
     {
         $user = User::find($user_id);

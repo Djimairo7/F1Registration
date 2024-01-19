@@ -2,13 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Http;
+use App\Models\Score;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Notification; // Import the Notification model class
-use App\Models\Score; // Import the Score class from the correct namespace
 
 class AppServiceProvider extends ServiceProvider
 {

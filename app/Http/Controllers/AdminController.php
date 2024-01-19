@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Score;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Score;
 
 class AdminController extends Controller
 {
@@ -13,10 +13,12 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index()
     {
         $scores = Score::with('user')->orderBy('score', 'asc')->get();
         $allusers = User::all();
+
         if (Auth::user()->IsAdmin == 1) {
             return view('auth.admin', compact('allusers', 'scores'));
         } else {
@@ -32,6 +34,7 @@ class AdminController extends Controller
         return redirect()->route('admin')
             ->with('success', 'Record deleted successfully.');
     }
+
     public function update(Request $request, $id)
     {
         // Validate the request data

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'IsAdmin',
     ];
 
     /**
@@ -48,6 +49,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
     public function scores()
     {
         return $this->hasMany(Score::class);
