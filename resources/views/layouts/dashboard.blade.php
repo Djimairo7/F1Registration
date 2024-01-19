@@ -32,7 +32,7 @@
                                         {{ $profile->last_name ?? '' }}</h5>
                                     <p class="card-text">{{ '@' . $user->username }}</p>
                                     <p class="card-text">Point Count: 54</p>
-                                    <p>{{ $profile->bio ?? '' }}</p>
+                                    <p>{{ $profile->bio ? '"' . $profile->bio . '"' : '' }}</p>
                                 </div>
                                 <hr>
                                 <div class="row justify-content-between">
