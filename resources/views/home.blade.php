@@ -82,7 +82,7 @@
                     @foreach ($scores as $index => $score)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ $score->user->profile->first_name ?? 'Not found' }}
+                            <td>{{ $score->user->profile->first_name ?? 'User not found' }}
                                 {{ $score->user->profile->last_name ?? '' }}</td>
                             <td>{{ $score->score }}</td>
                             <td>

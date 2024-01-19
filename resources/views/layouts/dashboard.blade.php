@@ -5,9 +5,6 @@
     $profile = optional($user->profile);
 @endphp
 
-@isset($profile)
-@endisset
-
 @section('content')
     <div class="container bg-secondary rounded">
         <div class="row">
@@ -20,17 +17,18 @@
                 <div class="d-flex flex-wrap flex-md-column m-2">
                     <div class="col-8 col-md-12 mb-2">
                         <div class="card bg-black text-white p-2">
-                            <div class="card-header">{{ __('First Card') }}</div>
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="{{ "data:image/png;base64," . $profile->profile_picture ?? }}" alt="Profile Picture"
-                                        class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                                    <img src="{{ $profile->profile_picture ? 'data:image/png;base64,' . $profile->profile_picture : 'https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp' }}"
+                                        alt="Profile Picture" class="img-fluid rounded-circle"
+                                        style="width: 150px; height: 150px;">
                                 </div>
                                 <div class="col-md-8">
                                     <h5 class="card-title">{{ $profile->first_name ?? '' }}
                                         {{ $profile->last_name ?? '' }}</h5>
                                     <p class="card-text">{{ '@' . $user->username }}</p>
                                     <p class="card-text">Point Count: 54</p>
+                                    <p>{{ $profile->bio ?? '' }}</p>
                                 </div>
                                 <hr>
                                 <div class="row justify-content-between">

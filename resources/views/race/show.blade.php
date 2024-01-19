@@ -71,8 +71,8 @@
                                         alt="User Image">
                                 @endisset
                                 <div class="col-8">
-                                    <h5 class="card-title">{{ $score->user->profile->first_name }}
-                                        {{ $score->user->profile->last_name }}</h5>
+                                    <h5 class="card-title">{{ $score->user->profile->first_name ?? 'User not found' }}
+                                        {{ $score->user->profile->last_name ?? '' }}</h5>
                                     <p class="card-text">Score: {{ $score->score }}</p>
                                 </div>
                                 <div class="col-4 text-right">
@@ -101,7 +101,8 @@
                 @foreach ($nextSevenScores as $index => $score)
                     <tr>
                         <th scope="row">{{ $index + 4 }}</th>
-                        <td>{{ $score->user->username }}</td>
+                        <td>{{ $score->user->profile->first_name ?? 'User not found' }}
+                            {{ $score->user->profile->last_name ?? '' }}</td>
                         <td>{{ $score->score }}</td>
                         <td>
                             @isset($score->image)

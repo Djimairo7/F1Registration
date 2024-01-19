@@ -6,16 +6,22 @@
         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                @if (auth()->user()->profile)
+                @if (auth()->user()->profile && auth()->user()->profile->profile_picture)
                     <img src="data:image/png;base64,{{ auth()->user()->profile->profile_picture }}" alt=""
-                        class="d-flex rounded-circle mx-auto mt-3" style="width: 350px; height: 350px;">
+                        class="d-flex mx-auto mt-3" style="width: 350px; height: 350px;">
                 @endif
-                <input type="file" name="profile_picture" id="profile_picture" class="d-none"
-                    onchange="previewImageUpdate()" accept="image/*">
-                <label id="profileImageLabel" for="profile_picture"
-                    class="btn btn-danger mt-3 w-25 align-items-center d-flex justify-content-center mx-auto">
-                    Select Image
-                </label>
+
+                <div class="d-flex align-items-center d-flex justify-content-center">
+                    <input type="file" name="profile_picture" id="profile_picture" class="d-none"
+                        onchange="previewImageUpdate()" accept="image/*">
+                    <label id="profileImageLabel" for="profile_picture" class="btn btn-danger mt-3 mx-1 w-25 ">
+                        Select Image
+                    </label>
+                    <button type="submit" name="remove_picture" value="remove"
+                        class="btn btn-secondary text-danger mx-1 mt-3">
+                        <i class="fas fa-trash ml-2"></i>
+                    </button>
+                </div>
             </div>
             <div class="form-group">
                 <label for="first_name">First Name</label>
