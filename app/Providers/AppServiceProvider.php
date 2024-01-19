@@ -60,9 +60,6 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         }
-        // Get the leaderboard data
-        $users = Score::where('race_name', $currentRace['raceName'])->orderBy('score', 'desc')->get();
-
 
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
@@ -70,6 +67,5 @@ class AppServiceProvider extends ServiceProvider
         view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
         view()->share('currentRace', $currentRace);
-        view()->share('users', $users);
     }
 }
