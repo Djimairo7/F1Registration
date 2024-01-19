@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -128,6 +129,16 @@ class ProfileController extends Controller
             return redirect()->route('profile')->with('success', 'Profiel succesvol ge-updatet!');
         } else {
             throw new NotFoundHttpException('Het profiel is niet gevonden. :(');
+        }
+    }
+    public function show($user_id)
+    {
+        $user = User::find($user_id);
+
+        if ($user) {
+            return view('profile.show', compact('user'));
+        } else {
+            return redirect()->route('discover')->with('error', 'User not found.');
         }
     }
 }

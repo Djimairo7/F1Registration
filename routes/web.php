@@ -31,6 +31,8 @@ Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@subm
 //route om profile.create.blade to connecten aan een web eindpunt met een authetificatie zodat je alleen een profiel kan maken als je ingelogt bent.
 Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile')
     ->middleware('auth');
+Route::get('/{user_id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show')
+    ->middleware('auth');
 Route::get('/profile/create', [\App\Http\Controllers\ProfileController::class, 'create'])->name('profile.create')
     ->middleware('auth');
 Route::post('/profile/store', [\App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store')
