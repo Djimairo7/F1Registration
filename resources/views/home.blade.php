@@ -82,7 +82,7 @@
                     @foreach ($scores as $index => $score)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{ $score->user->username }}</td>
+                            <td>{{ $score->user->profile->first_name }} {{ $score->user->profile->last_name }}</td>
                             <td>{{ $score->score }}</td>
                             <td>
                                 <img src="data:image/png;base64,{{ $score->image }}" alt="User Image" width="50"

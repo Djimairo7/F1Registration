@@ -65,8 +65,14 @@
                         <div class="card-body">
                             <h1 class="text-center m-2">{{ $index + 1 }}</h1>
                             <div class="row align-items-center">
+                                @isset($score->user->profile->profile_picture)
+                                    <img class="d-flex img-responsive rounded-circle mx-auto w-75 m-3"
+                                        src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
+                                        alt="User Image">
+                                @endisset
                                 <div class="col-8">
-                                    <h5 class="card-title">{{ $score->user->username }}</h5>
+                                    <h5 class="card-title">{{ $score->user->profile->first_name }}
+                                        {{ $score->user->profile->last_name }}</h5>
                                     <p class="card-text">Score: {{ $score->score }}</p>
                                 </div>
                                 <div class="col-4 text-right">
