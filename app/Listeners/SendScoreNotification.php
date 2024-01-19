@@ -26,11 +26,13 @@ class SendScoreNotification
     {
         $users = User::where('isAdmin', 1)->get();
         $scoreUser = User::find($event->score->user_id);
+        $raceName = ucwords(str_replace('-', ' ', $event->score->race_name));
+        $name = ucwords("{$scoreUser->profile->first_name} {$scoreUser->profile->last_name}");
 
         foreach ($users as $user) {
             $notification = [
                 'user_id' => $user->id,
-                'message' => "{$scoreUser->username} has added a new time to {$event->score->race_name}: {$event->score->score}",
+                'message' => "$name has added a new time to $raceName: {$event->score->score}",
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
