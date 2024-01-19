@@ -28,6 +28,16 @@ Route::delete('/notification/{id}', 'App\Http\Controllers\NotificationController
 Route::get('/race/{raceName}', 'App\Http\Controllers\RaceController@show')->name('race.show');
 Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@submitScore')->name('race.submit');
 
+//route om profile.create.blade to connecten aan een web eindpunt met een authetificatie zodat je alleen een profiel kan maken als je ingelogt bent.
+Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile')
+    ->middleware('auth');
+Route::get('/profile/create', [\App\Http\Controllers\ProfileController::class, 'create'])->name('profile.create')
+    ->middleware('auth');
+Route::post('/profile/store', [\App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store')
+    ->middleware('auth');
+Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update')
+    ->middleware('auth');
+
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::delete('/admin/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
 Route::put('/admin/update/{id}', [AdminController::class, 'update'])->name('admin.update');

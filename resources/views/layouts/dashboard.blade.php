@@ -3,6 +3,11 @@
 @section('content')
     <div class="container bg-secondary rounded">
         <div class="row">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="col-md-4 my-2">
                 <div class="d-flex flex-wrap flex-md-column m-2">
                     <div class="col-8 col-md-12 mb-2">
@@ -42,7 +47,13 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <a href="#" class="btn btn-danger">Edit Profile</a>
+                                <a href="{{ route('profile') }}" class="btn btn-danger">
+                                    @if (Auth::user()->profile)
+                                        Edit Profile
+                                    @else
+                                        Create Profile
+                                    @endif
+                                </a>
                             </div>
                         </div>
                     </div>
