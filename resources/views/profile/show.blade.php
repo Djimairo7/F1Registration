@@ -3,59 +3,75 @@
 @section('dashboard-content')
     <div class="card mb-2 p-4 bg-black text-white">
         @if ($user)
-            @isset($user->profile)
-                @if ($user->profile && $user->profile->profile_picture)
-                    <img src="{{ $user->profile->profile_picture ? 'data:image/png;base64,' . $user->profile->profile_picture : 'https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp' }}"
-                        alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
-                @endif
-                <h3>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</h3>
-                <p>{{ $user->profile->bio }}</p>
-            @endisset
-            <p>{{ '@' . $user->username }}</p>
+            <div class="row">
+                <div class="d-flex flex-rows">
+                    @isset($user->profile)
+                        @if ($user->profile && $user->profile->profile_picture)
+                            <img src="data:image/png;base64, {{ $user->profile->profile_picture }}" alt="Profile Picture"
+                                class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px;">
+                        @endif
+                    @else
+                        <img src="https://vivaldi.com/wp-content/themes/vivaldicom-theme/img/new/icon.webp" alt="Profile Picture"
+                            class="img-fluid rounded-circle mb-2" style="width: 150px; height: 150px;">
+                    @endisset
+                    <div class="mx-4">
+                        @isset($user->profile)
+                            <h3>{{ $user->profile->first_name }} {{ $user->profile->last_name }}</h3>
+                            <p>{{ '@' . $user->username }}</p>
+                            <p>{{ $user->profile->bio }}</p>
+                        @else
+                            <h3>User {{ $user->id }}</h3>
+                            <p>{{ '@' . $user->username }}</p>
+                        @endisset
+                    </div>
+                </div>
+            </div>
         @endif
 
-        @if (count($user->scores) > 0)
-            <hr>
-            <canvas id="scoreChart"
-                data-data="{{ json_encode(
-                    $user->scores->map(function ($score) {
-                        $timeParts = explode(' ', $score->score);
-                        $seconds = isset($timeParts[0]) ? floatval($timeParts[0]) : 0;
-                        $milliseconds = isset($timeParts[2]) ? floatval($timeParts[2]) / 1000 : 0;
-                        $microseconds = isset($timeParts[4]) ? floatval($timeParts[4]) / 1000000 : 0;
-                        $totalSeconds = $seconds + $milliseconds + $microseconds;
-                        return [
-                            'race' => $score->race_name,
-                            'score' => $totalSeconds,
-                            'date' => $score->created_at->format('Y-m-d'),
-                        ];
-                    }),
-                ) }}"></canvas>
-            <h3>Scores:</h3>
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">Race Name</th>
-                        <th scope="col">Score</th>
-                        <th scope="col">Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($user->scores->sortByDesc('created_at') as $score)
+        @isset($user->profile)
+            @if (count($user->scores) > 0)
+                <hr>
+                <canvas id="scoreChart"
+                    data-data="{{ json_encode(
+                        $user->scores->map(function ($score) {
+                            $timeParts = explode(' ', $score->score);
+                            $seconds = isset($timeParts[0]) ? floatval($timeParts[0]) : 0;
+                            $milliseconds = isset($timeParts[2]) ? floatval($timeParts[2]) / 1000 : 0;
+                            $microseconds = isset($timeParts[4]) ? floatval($timeParts[4]) / 1000000 : 0;
+                            $totalSeconds = $seconds + $milliseconds + $microseconds;
+                            return [
+                                'race' => $score->race_name,
+                                'score' => $totalSeconds,
+                                'date' => $score->created_at->format('Y-m-d'),
+                            ];
+                        }),
+                    ) }}"></canvas>
+                <h3>Scores:</h3>
+                <table class="table table-dark">
+                    <thead>
                         <tr>
-                            <td>
-                                <button class="btn btn-danger race-button" data-race="{{ $score->race_name }}">
-                                    {{ ucwords(str_replace('-', ' ', $score->race_name)) }}
-                                </button>
-                            </td>
-                            <td>{{ $score->score }}</td>
-                            <td>{{ $score->created_at }}</td>
+                            <th scope="col">Race Name</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Created At</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
-    </div>
+                    </thead>
+                    <tbody>
+                        @foreach ($user->scores->sortByDesc('created_at') as $score)
+                            <tr>
+                                <td>
+                                    <button class="btn btn-danger race-button" data-race="{{ $score->race_name }}">
+                                        {{ ucwords(str_replace('-', ' ', $score->race_name)) }}
+                                    </button>
+                                </td>
+                                <td>{{ $score->score }}</td>
+                                <td>{{ $score->created_at }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+        </div>
+    @endisset
 @endsection
 
 <script>
@@ -121,7 +137,7 @@
                 options: {
                     scales: {
                         x: {
-                            type: 'category',
+                            type: 'category'
                         },
                         y: {
                             beginAtZero: true,
