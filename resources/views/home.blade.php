@@ -15,7 +15,7 @@
             </h5>
         </div>
 
-        <div id="currentRaceTable" class="collapse show">
+        <div id="currentRaceTable" class="collapse show p-2">
             <div class="card-body d-flex flex-column">
                 @if (!empty($races))
                     @if ($currentRace)
@@ -88,14 +88,21 @@
 
                 <div class="row">
                     @foreach ($orderedScores as $index => $score)
-                        <div class="col d-flex flex-column justify-content-end">
+                        <div class="col d-flex flex-column justify-content-end px-0">
                             <div
-                                class="card bg-dark text-white rounded-bottom-0 pb-{{ 2 * (2 - $index) }} mt-{{ 2 * (2 - $index) }} ">
-                                <div class="card-body">
-                                    <h1 class="text-center m-2">{{ $index + 1 }}</h1>
+                                class="card bg-dark text-white rounded-bottom-0 pb-{{ 2 * (2 - $index) }} mt-{{ 2 * (2 - $index) }}">
+                                <div class="card-body mt-{{ 2 * (2 - $index) }}">
+                                    <h1 class="text-center">{{ $index + 1 }}</h1>
                                     <div class="row align-items-center">
+                                        @isset($score->user->profile->profile_picture)
+                                            <img class="d-flex img-responsive rounded-circle mx-auto w-75"
+                                                src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
+                                                alt="User Image">
+                                        @endisset
                                         <div class="col-8">
-                                            <h5 class="card-title">{{ $score->user->username }}</h5>
+                                            <h5 class="card-title">
+                                                {{ $score->user->profile->first_name ?? 'User not found' }}
+                                                {{ $score->user->profile->last_name ?? '' }}</h5>
                                             <p class="card-text">Score: {{ $score->score }}</p>
                                         </div>
                                         <div class="col-4 text-right">
@@ -110,7 +117,7 @@
                         </div>
                     @endforeach
                     @if (count($nextSevenScores) > 0)
-                        <table class="table table-dark">
+                        <table class="table table-dark mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -141,7 +148,6 @@
                     @endif
                 </div>
             </div>
-
         </div>
     </div>
 
