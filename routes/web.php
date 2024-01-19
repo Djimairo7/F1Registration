@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisterController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RaceController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,30 +16,26 @@ use App\Http\Controllers\AdminController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/discover', [App\Http\Controllers\DiscoverController::class, 'index'])->name('discover');
 
-Route::delete('/notification/{id}', 'App\Http\Controllers\NotificationController@destroy')->name('notification.destroy');
+Route::delete('/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
 
-Route::get('/race/{raceName}', 'App\Http\Controllers\RaceController@show')->name('race.show');
-Route::post('/race/{raceName}/submit', 'App\Http\Controllers\RaceController@submitScore')->name('race.submit');
+Route::get('/race/{raceName}', [RaceController::class, 'show'])->name('race.show');
+Route::post('/race/{raceName}/submit', [RaceController::class, 'submitScore'])->name('race.submit');
 
 //route om profile.create.blade to connecten aan een web eindpunt met een authetificatie zodat je alleen een profiel kan maken als je ingelogt bent.
-Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile')
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile')
     ->middleware('auth');
-Route::get('/{user_id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show')
+Route::get('/profile/{user_id}', [ProfileController::class, 'show'])->name('profile.show')
     ->middleware('auth');
-Route::get('/profile/create', [\App\Http\Controllers\ProfileController::class, 'create'])->name('profile.create')
+Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create')
     ->middleware('auth');
-Route::post('/profile/store', [\App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store')
+Route::post('/profile/store', [ProfileController::class, 'store'])->name('profile.store')
     ->middleware('auth');
-Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update')
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')
     ->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');

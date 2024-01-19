@@ -23,21 +23,25 @@
                     </button>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name"
-                    value="{{ auth()->user()->profile->first_name }}">
+            <div class="px-4">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name"
+                           value="{{ auth()->user()->profile->first_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name"
+                           value="{{ auth()->user()->profile->last_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea class="form-control" id="bio" name="bio">{{ auth()->user()->profile->bio }}</textarea>
+                </div>
+                <div class="d-flex justify-content-center mt-3 mb-3">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name"
-                    value="{{ auth()->user()->profile->last_name }}">
-            </div>
-            <div class="form-group">
-                <label for="bio">Bio</label>
-                <textarea class="form-control" id="bio" name="bio">{{ auth()->user()->profile->bio }}</textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
     </div>
 @endsection

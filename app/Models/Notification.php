@@ -13,6 +13,4 @@ class Notification extends Model
     {
         return $this->hasMany(Notification::class);
     }
-
-    // Add any other necessary configurations or relationships here
 }

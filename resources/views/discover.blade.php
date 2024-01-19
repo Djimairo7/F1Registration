@@ -20,7 +20,7 @@
                                 <div class="card m-2 d-inline-grid flex-shrink-0 bg-secondary">
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title text-nowrap text-white">{{ $user->username }}</h5>
-                                        <a href="{{ url('/' . $user->id) }}" class="btn btn-danger btn-primary mt-auto">
+                                        <a href="{{ url('/profile/' . $user->id) }}" class="btn btn-danger btn-primary mt-auto">
                                             View Details
                                         </a>
                                     </div>

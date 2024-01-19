@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Import the Auth facade
-use App\Models\User; // Import the User model class
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class DiscoverController extends Controller
 {
@@ -18,6 +18,7 @@ class DiscoverController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index(Request $request)
     {
         // Check if user is authenticated
@@ -69,8 +70,7 @@ class DiscoverController extends Controller
 
             return view('discover', compact('user', 'filteredUsers', 'filteredRaces', 'filteredDrivers', 'allUsers', 'fullName', 'username', 'pointCount', 'races', 'drivers'));
         } else {
-            // User is not authenticated, handle accordingly
-            // For example, redirect to login page or show an error message
+            return redirect('/login');
         }
     }
 }

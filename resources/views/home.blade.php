@@ -6,8 +6,8 @@
         <div class="card-header bg-danger">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                    onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
-                    aria-controls="currentRaceTable">
+                        onclick="toggleCollapse('currentRaceTable', 'currentRaceTableIcon')" aria-expanded="true"
+                        aria-controls="currentRaceTable">
                     <p class="mb-0 align-self-center">Huidige race - {{ $currentRace['Circuit']['circuitName'] }}
                     </p>
                     <i id="currentRaceTableIcon" class="fas fa-chevron-up ml-2"></i>
@@ -22,7 +22,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <img src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
+                                    <img
+                                        src="{{ $raceImages[Str::slug($currentRace['Circuit']['Location']['country'])] }}"
                                         alt="{{ $currentRace['Circuit']['Location']['country'] }} Preview"
                                         class="img-fluid">
                                     <p class="my-0">{{ $currentRace['Circuit']['circuitName'] }},
@@ -32,33 +33,34 @@
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-center">
                                 <form class="text-center" method="POST"
-                                    action="{{ route('race.submit', ['raceName' => Str::slug($currentRace['Circuit']['circuitName'])]) }}"
-                                    enctype="multipart/form-data">
+                                      action="{{ route('race.submit', ['raceName' => Str::slug($currentRace['Circuit']['circuitName'])]) }}"
+                                      enctype="multipart/form-data">
                                     @csrf
                                     <h2 class="mb-4">Tijd Toevoegen</h2>
                                     <div class="form-group">
                                         <input type="text" id="timeInput"
-                                            class="form-control form-control-lg bg-secondary text-white border-0 text-center"
-                                            placeholder="Gereden Tijd" name="Time" maxlength="6">
+                                               class="form-control form-control-lg bg-secondary text-white border-0 text-center"
+                                               placeholder="Gereden Tijd" name="Time" maxlength="6">
                                         @error('Time')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group mt-3">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="UplRaceImg"
-                                                name="UplRaceImg" hidden>
+                                                   name="UplRaceImg" hidden>
                                             <label
                                                 class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center"
                                                 for="UplRaceImg">
                                                 Upload Image
                                             </label>
                                             @error('UplRaceImg')
-                                                <div class="text-danger">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen</button>
+                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -96,8 +98,8 @@
                                     <div class="row align-items-center">
                                         @isset($score->user->profile->profile_picture)
                                             <img class="d-flex img-responsive rounded-circle mx-auto w-75"
-                                                src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
-                                                alt="User Image">
+                                                 src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
+                                                 alt="User Image">
                                         @endisset
                                         <div class="col-8">
                                             <h5 class="card-title">
@@ -108,7 +110,7 @@
                                         <div class="col-4 text-right">
                                             @isset($score->image)
                                                 <img class="" src="data:image/png;base64,{{ $score->image }}"
-                                                    alt="User Image" width="50" height="50">
+                                                     alt="User Image" width="50" height="50">
                                             @endisset
                                         </div>
                                     </div>
@@ -119,27 +121,27 @@
                     @if (count($nextSevenScores) > 0)
                         <table class="table table-dark mb-0">
                             <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Score</th>
-                                    <th scope="col">Image</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Image</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach ($nextSevenScores as $index => $score)
-                                    <tr>
-                                        <th scope="row">{{ $index + 4 }}</th>
-                                        <td>{{ $score->user->username }}</td>
-                                        <td>{{ $score->score }}</td>
-                                        <td>
-                                            @isset($score->image)
-                                                <img class="" src="data:image/png;base64,{{ $score->image }}"
-                                                    alt="User Image" width="50" height="50">
-                                            @endisset
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($nextSevenScores as $index => $score)
+                                <tr>
+                                    <th scope="row">{{ $index + 4 }}</th>
+                                    <td>{{ $score->user->username }}</td>
+                                    <td>{{ $score->score }}</td>
+                                    <td>
+                                        @isset($score->image)
+                                            <img class="" src="data:image/png;base64,{{ $score->image }}"
+                                                 alt="User Image" width="50" height="50">
+                                        @endisset
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     @endif
@@ -156,8 +158,8 @@
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                    onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
-                    aria-controls="futureRaceTable">
+                        onclick="toggleCollapse('previousRaceTable', 'previousRaceTableIcon')" aria-expanded="false"
+                        aria-controls="futureRaceTable">
                     <p class="mb-0 align-self-center">Eerdere races</p>
                     <i id="previousRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
                 </button>
@@ -174,7 +176,7 @@
 
                         @if ($raceStartDate->lt($currentDate))
                             <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                               class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                 <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                 <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
                                 <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
@@ -194,8 +196,8 @@
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="btn w-100 text-sm-left text-white d-flex align-items-center justify-content-between"
-                    onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
-                    aria-controls="futureRaceTable">
+                        onclick="toggleCollapse('futureRaceTable', 'futureRaceTableIcon')" aria-expanded="false"
+                        aria-controls="futureRaceTable">
                     <p class="mb-0 align-self-center">Toekomstige races</p>
                     <i id="futureRaceTableIcon" class="fas fa-chevron-down ml-2"></i>
                 </button>
@@ -212,7 +214,7 @@
                         {{-- //TODO: align these better --}}
                         @if ($raceStartDate->gt($currentDate))
                             <a href="{{ route('race.show', ['raceName' => Str::slug($race['Circuit']['circuitName'])]) }}"
-                                class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
+                               class="btn bg-secondary my-1 mx-2 d-flex justify-content-between align-items-center">
                                 <p class="my-1 mx-2">{{ $race['Circuit']['Location']['locality'] }}</p>
                                 <p class="my-1 mx-2">{{ $race['Circuit']['circuitName'] }}</p>
                                 <p class="my-1 mx-2">{{ $race['Circuit']['Location']['country'] }}</p>
@@ -258,14 +260,15 @@
                 }
             }
         }
-        document.getElementById('timeInput').addEventListener('input', function(e) { //the layout of the score
+
+        document.getElementById('timeInput').addEventListener('input', function (e) { //the layout of the score
             var input = e.target.value;
             input = input.replace(/\D/g, ""); // Remove non-digits
             input = input.replace(/^(\d{1})(\d{2})(\d{3})$/, "$1.$2.$3"); // Add dots
             e.target.value = input;
         });
 
-        document.getElementById('UplRaceImg').addEventListener('change', function(e) {
+        document.getElementById('UplRaceImg').addEventListener('change', function (e) {
             var fileName = e.target.files[0].name;
             document.querySelector('label[for="UplRaceImg"]').textContent = fileName;
         });

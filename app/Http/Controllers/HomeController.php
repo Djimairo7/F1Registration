@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth; // Import the Auth facade
-use App\Models\Notification; // Import the Notification model class
+use App\Models\Notification;
+use App\Models\Score;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use App\Models\Score; // Import the Score class from the correct namespace
-use Illuminate\Support\Str; // Import the Str class from the correct namespace
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 class HomeController extends Controller
 {
     /**
@@ -27,6 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
+
         $fullName = $user->name;
         $username = $user->username;
         $pointCount = $user->point_count;

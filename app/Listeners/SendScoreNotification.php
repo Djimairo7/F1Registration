@@ -2,8 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Events\ScoreCreated;
-use App\Events\ScoreUpdated;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
