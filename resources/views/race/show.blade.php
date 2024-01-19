@@ -86,8 +86,37 @@
                     </div>
                 </div>
             @endforeach
+            @if (count($nextSevenScores) > 0)
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($nextSevenScores as $index => $score)
+                            <tr>
+                                <th scope="row">{{ $index + 4 }}</th>
+                                <td>{{ $score->user->username }}</td>
+                                <td>{{ $score->score }}</td>
+                                <td>
+                                    @isset($score->image)
+                                        <img class="" src="data:image/png;base64,{{ $score->image }}" alt="User Image"
+                                            width="50" height="50">
+                                    @endisset
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
+            @if (count($topThreeScores) < 1)
+                <h2 class="text-center my-5">No entries yet</h2>
+            @endif
         </div>
-
         <table class="table table-dark">
             <thead>
                 <tr>
