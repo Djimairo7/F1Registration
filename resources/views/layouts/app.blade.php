@@ -30,7 +30,10 @@
                     {{ config('app.name', 'Laravel') }}
                 </a> --}}
                 <div class="me-3">
-                    <img src="{{ asset('favicon.ico') }}" alt="" height="40px" width="40px">
+                    <a href="{{ route('home') }}" class="d-flex nav-link">
+                        <img src="{{ asset('favicon.ico') }}" alt="" height="40px" width="40px">
+                        <p class="text-danger my-auto ms-2 fw-bold">Registration</p>
+                    </a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
