@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -102,16 +103,42 @@ class ProfileController extends Controller
         // Create a new profile instance and save the validated data
         $profile = $user->profile;
 
+        if ($request->input('remove_picture') === 'remove') {
+            if ($profile) {
+                $profile->profile_picture = null;
+                $profile->update();
+
+                return redirect()->route('profile')->with('success', 'Profile picture removed successfully!');
+            } else {
+                return redirect()->route('profile')->with('error', 'Failed to remove profile picture.');
+            }
+        }
+
         if ($profile) {
+            $profile->first_name = $validatedData['first_name'];
+            $profile->last_name = $validatedData['last_name'];
+            $profile->bio = $validatedData['bio'];
+
             if ($request->file('profile_picture')) {
                 $profile->profile_picture = $base64Image;
             }
+
             $profile->update();
 
             // Redirect to a desired route (e.g., profile index) with a success message
             return redirect()->route('profile')->with('success', 'Profiel succesvol ge-updatet!');
         } else {
             throw new NotFoundHttpException('Het profiel is niet gevonden. :(');
+        }
+    }
+    public function show($user_id)
+    {
+        $user = User::find($user_id);
+
+        if ($user) {
+            return view('profile.show', compact('user'));
+        } else {
+            return redirect()->route('discover')->with('error', 'User not found.');
         }
     }
 }

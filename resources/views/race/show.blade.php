@@ -65,8 +65,14 @@
                         <div class="card-body">
                             <h1 class="text-center m-2">{{ $index + 1 }}</h1>
                             <div class="row align-items-center">
+                                @isset($score->user->profile->profile_picture)
+                                    <img class="d-flex img-responsive rounded-circle mx-auto w-75 m-3"
+                                        src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
+                                        alt="User Image">
+                                @endisset
                                 <div class="col-8">
-                                    <h5 class="card-title">{{ $score->user->username }}</h5>
+                                    <h5 class="card-title">{{ $score->user->profile->first_name ?? 'User not found' }}
+                                        {{ $score->user->profile->last_name ?? '' }}</h5>
                                     <p class="card-text">Score: {{ $score->score }}</p>
                                 </div>
                                 <div class="col-4 text-right">
@@ -111,5 +117,31 @@
                 <h2 class="text-center my-5">No entries yet</h2>
             @endif
         </div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($nextSevenScores as $index => $score)
+                    <tr>
+                        <th scope="row">{{ $index + 4 }}</th>
+                        <td>{{ $score->user->profile->first_name ?? 'User not found' }}
+                            {{ $score->user->profile->last_name ?? '' }}</td>
+                        <td>{{ $score->score }}</td>
+                        <td>
+                            @isset($score->image)
+                                <img class="" src="data:image/png;base64,{{ $score->image }}" alt="User Image"
+                                    width="50" height="50">
+                            @endisset
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection

@@ -16,7 +16,7 @@ class RaceController extends Controller
         $user = Auth::user(); // Assign the authenticated user to the variable '$user'
         $fullName = $user->name;
         $username = $user->username;
-        $pointCount = $user->point_count;
+        $points = $user->points;
 
         $races = App::make('races');
 
@@ -34,7 +34,7 @@ class RaceController extends Controller
             ->where('race_name', $raceName)
             ->orderBy('score', 'asc')
             ->get();
-        return view('race.show', compact('user', 'fullName', 'username', 'pointCount', 'race', 'scores'));
+        return view('race.show', compact('user', 'fullName', 'username', 'points', 'race', 'scores'));
     }
     public function submitScore(Request $request, $raceName)
     {
