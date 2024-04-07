@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         try {
             Http::withoutVerifying()->get('http://ergast.com/api/f1');
         } catch (\Exception $e) {
+            //only display a full page error if the local files are empty, else continue with the local files
             if (filesize(base_path('public/races2024.json')) == 0 || filesize(base_path('public/drivers2024.json')) == 0) {
                 // Return a response with the error message
                 abort(response('<h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1>', 500));
@@ -45,18 +46,18 @@ class AppServiceProvider extends ServiceProvider
 
             if ($responses['races']->successful()) {
                 File::put(base_path('public/races2024.json'), json_encode($races));
+                // Clear the file when it's not needed anymore
+                // File::put(base_path('public/races2024.json'), '');
             }
 
             if ($responses['drivers']->successful()) {
                 File::put(base_path('public/drivers2024.json'), json_encode($drivers));
+                // Clear the file when it's not needed anymore
+                // File::put(base_path('public/drivers2024.json'), '');
             }
 
             return compact('races', 'drivers');
         });
-
-        // Clear the files when they are not needed anymore
-        File::put(base_path('public/races2024.json'), '');
-        File::put(base_path('public/drivers2024.json'), '');
 
         $races = $data['races'];
         $drivers = $data['drivers'];
