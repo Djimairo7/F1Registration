@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Score;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -23,18 +24,42 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //* GET info from API
-        $races = Cache::remember('races', 180, function () {
-            $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
-            return $racesreq->json();
+        // Check if the ergast API is available and throw an error if it fails
+        try {
+            Http::withoutVerifying()->get('http://ergast.com/api/f1');
+        } catch (\Exception $e) {
+            if (filesize(base_path('public/races2024.json')) == 0 || filesize(base_path('public/drivers2024.json')) == 0) {
+                // Return a response with the error message
+                abort(response('<h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1>', 500));
+            }
+        }
+
+        $data = Cache::remember('data', 180, function () {
+            $responses = Http::pool(fn (Pool $pool) => [
+                $pool->as('races')->withoutVerifying()->get('http://ergast.com/api/f1/2024.json'),
+                $pool->as('drivers')->withoutVerifying()->get('http://ergast.com/api/f1/2024/drivers.json'),
+            ]);
+
+            $races = $responses['races']->successful() ? $responses['races']->json() : json_decode(File::get(base_path('public/races2024.json')), true);
+            $drivers = $responses['drivers']->successful() ? $responses['drivers']->json() : json_decode(File::get(base_path('public/drivers2024.json')), true);
+
+            if ($responses['races']->successful()) {
+                File::put(base_path('public/races2024.json'), json_encode($races));
+            }
+
+            if ($responses['drivers']->successful()) {
+                File::put(base_path('public/drivers2024.json'), json_encode($drivers));
+            }
+
+            return compact('races', 'drivers');
         });
 
-        $drivers = Cache::remember('drivers', 180, function () {
-            $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
-            return $driversreq->json();
-        });
+        // Clear the files when they are not needed anymore
+        File::put(base_path('public/races2024.json'), '');
+        File::put(base_path('public/drivers2024.json'), '');
 
-        // dd($getRaces, $getDrivers);
+        $races = $data['races'];
+        $drivers = $data['drivers'];
 
         // Get the corresponding race preview image for each race
         $raceImages = [];
@@ -61,9 +86,9 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
-        $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
-        $this->app->instance('currentRace', $currentRace);
+        view()->share('races', $races['MRData']['RaceTable']['Races']);
+        view()->share('drivers', $drivers['MRData']['DriverTable']['Drivers']);
+        view()->share('currentRace', $currentRace);
         view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
         view()->share('currentRace', $currentRace);
