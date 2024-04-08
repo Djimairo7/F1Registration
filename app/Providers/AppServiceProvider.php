@@ -72,16 +72,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Share the variables with all views
-        $variables = [
-            'races' => $races['MRData']['RaceTable']['Races'],
-            'drivers' => $drivers['MRData']['DriverTable']['Drivers'],
-            'currentRace' => $currentRace,
-            'raceImages' => $raceImages,
-            'currentDate' => $currentDate,
-        ];
-        foreach ($variables as $name => $value) {
-            $this->app->instance($name, $value);
-            view()->share($name, $value);
-        }
+        $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
+        $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
+        $this->app->instance('currentRace', $currentRace);
+        view()->share('raceImages', $raceImages);
+        view()->share('currentDate', $currentDate);
+        view()->share('currentRace', $currentRace);
     }
 }
