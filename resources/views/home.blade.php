@@ -258,12 +258,16 @@
 
             // Close all other tables
             var allTables = document.getElementsByClassName('collapse');
-            var allIcons = document.querySelectorAll('i.fas');
             for (var i = 0; i < allTables.length; i++) {
                 if (allTables[i].id !== tableId) {
                     allTables[i].style.display = 'none';
                     allTables[i].previousElementSibling.classList.remove('bg-danger');
                 }
+            }
+
+            // Change all other icons
+            var allIcons = document.querySelectorAll('i.fas');
+            for (var i = 0; i < allIcons.length; i++) {
                 if (allIcons[i].id !== iconId) {
                     allIcons[i].classList.add('fa-chevron-down');
                     allIcons[i].classList.remove('fa-chevron-up');
