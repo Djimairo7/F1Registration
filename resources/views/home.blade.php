@@ -100,9 +100,9 @@
                                     <h1 class="text-center">{{ $index + 1 }}</h1>
                                     <div class="row align-items-center">
                                         @isset($score->user->profile->profile_picture)
-                                            <img class="d-flex img-responsive rounded-circle mx-auto w-75"
+                                            <img class="d-flex img-responsive rounded-circle mx-auto p-0"
                                                 src="data:image/png;base64,{{ $score->user->profile->profile_picture }}"
-                                                alt="User Image">
+                                                alt="User Image" style="width: 150px; height: 150px; object-fit: cover;">
                                         @endisset
                                         <div class="col-8">
                                             <h5 class="card-title">
