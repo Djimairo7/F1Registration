@@ -26,13 +26,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Check if the ergast API is available and throw an error if it fails
         try {
-            Http::withoutVerifying()->get('http://ergast.com/api/f1');
+            Http::withoutVerifying()->get('https://ergast.com/api/f1');
         } catch (\Exception $e) {
-            //only display a full page error if the local files are empty, else continue with the local files
-            if (filesize(base_path('public/races2024.json')) == 0 || filesize(base_path('public/drivers2024.json')) == 0) {
-                // Return a response with the error message
-                abort(response('<h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1>', 500));
-            }
+            abort(response('<h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1>', 500));
         }
 
         $data = Cache::remember('data', 180, function () {
@@ -43,18 +39,6 @@ class AppServiceProvider extends ServiceProvider
 
             $races = $responses['races']->successful() ? $responses['races']->json() : json_decode(File::get(base_path('public/races2024.json')), true);
             $drivers = $responses['drivers']->successful() ? $responses['drivers']->json() : json_decode(File::get(base_path('public/drivers2024.json')), true);
-
-            if ($responses['races']->successful()) {
-                File::put(base_path('public/races2024.json'), json_encode($races));
-                // Clear the file when it's not needed anymore
-                // File::put(base_path('public/races2024.json'), '');
-            }
-
-            if ($responses['drivers']->successful()) {
-                File::put(base_path('public/drivers2024.json'), json_encode($drivers));
-                // Clear the file when it's not needed anymore
-                // File::put(base_path('public/drivers2024.json'), '');
-            }
 
             return compact('races', 'drivers');
         });

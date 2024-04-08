@@ -11,3 +11,13 @@
 body {
     font-family: "Exo 2", sans-serif;
 }
+
+input::placeholder {
+    color: var(--bs-gray-500) !important;
+    opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+input::-ms-input-placeholder {
+    color: white !important;
+}
