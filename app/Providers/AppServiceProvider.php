@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         try {
             Http::withoutVerifying()->get('https://ergast.com/api/f1');
         } catch (\Exception $e) {
-            abort(response('<h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1>', 500));
+            abort(response('<div style="margin: 1rem"><img src="https://raw.githubusercontent.com/Djimairo7/F1Registration/main/public/favicon.ico"><br><h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1></div>', 500));
         }
 
         $data = Cache::remember('data', 180, function () {

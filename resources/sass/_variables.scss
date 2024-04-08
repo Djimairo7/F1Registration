@@ -9,3 +9,6 @@ $line-height-base: 1.6;
 :root {
     --bs-secondary-rgb: 63, 69, 73 !important;
 }
+.text-bs-gray-500 {
+    color: var(--bs-gray-400) !important;
+}

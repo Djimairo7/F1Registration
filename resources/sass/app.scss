@@ -21,3 +21,9 @@ input:-ms-input-placeholder,
 input::-ms-input-placeholder {
     color: white !important;
 }
+
+.btn-racecard:hover {
+    background-color: var(--bs-secondary) !important;
+    color: white !important;
+    border: 1px solid var(--bs-secondary) !important;
+}
