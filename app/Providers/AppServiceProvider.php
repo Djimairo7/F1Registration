@@ -87,8 +87,9 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        $this->app->singleton('races', $races['MRData']['RaceTable']['Races']);
-        $this->app->singleton('drivers', $drivers['MRData']['DriverTable']['Drivers']);
+        $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
+        $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
+        $this->app->instance('currentRace', $currentRace);
         view()->share('currentRace', $currentRace);
         view()->share('raceImages', $raceImages);
         view()->share('currentDate', $currentDate);
