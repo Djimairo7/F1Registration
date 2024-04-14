@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Score;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -23,18 +24,27 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //* GET info from API
-        $races = Cache::remember('races', 180, function () {
-            $racesreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2024.json');
-            return $racesreq->json();
+        // Check if the ergast API is available and throw an error if it fails
+        try {
+            Http::withoutVerifying()->get('https://ergast.com/api/f1');
+        } catch (\Exception $e) {
+            abort(response('<div style="margin: 1rem"><img src="https://raw.githubusercontent.com/Djimairo7/F1Registration/main/public/favicon.ico"><br><h1>An error occurred while fetching the data. <br> The API is not available right now, and not all information exists locally, please try again later.</h1></div>', 500));
+        }
+
+        $data = Cache::remember('data', 180, function () {
+            $responses = Http::pool(fn (Pool $pool) => [
+                $pool->as('races')->withoutVerifying()->get('http://ergast.com/api/f1/2024.json'),
+                $pool->as('drivers')->withoutVerifying()->get('http://ergast.com/api/f1/2024/drivers.json'),
+            ]);
+
+            $races = $responses['races']->successful() ? $responses['races']->json() : json_decode(File::get(base_path('public/races2024.json')), true);
+            $drivers = $responses['drivers']->successful() ? $responses['drivers']->json() : json_decode(File::get(base_path('public/drivers2024.json')), true);
+
+            return compact('races', 'drivers');
         });
 
-        $drivers = Cache::remember('drivers', 180, function () {
-            $driversreq = Http::withoutVerifying()->get('http://ergast.com/api/f1/2023/drivers.json'); //2023 for testing purposes. 2024 gives nothing
-            return $driversreq->json();
-        });
-
-        // dd($getRaces, $getDrivers);
+        $races = $data['races'];
+        $drivers = $data['drivers'];
 
         // Get the corresponding race preview image for each race
         $raceImages = [];
@@ -61,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        // Share the variables with all views
         $this->app->instance('races', $races['MRData']['RaceTable']['Races']);
         $this->app->instance('drivers', $drivers['MRData']['DriverTable']['Drivers']);
         $this->app->instance('currentRace', $currentRace);

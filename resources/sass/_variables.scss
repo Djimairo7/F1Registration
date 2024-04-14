@@ -2,6 +2,13 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+:root {
+    --bs-secondary-rgb: 63, 69, 73 !important;
+}
+.text-bs-gray-500 {
+    color: var(--bs-gray-400) !important;
+}

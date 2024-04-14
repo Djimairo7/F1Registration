@@ -24,11 +24,11 @@
             <div class="row">
                 <div class="col-md-6 d-flex flex-column justify-content-center">
                     <div class="row">
-                        <p class="my-0">Race name: {{ $race['raceName'] }}</p>
-                        <p class="my-0">Circuit name: {{ $race['Circuit']['circuitName'] }}</p>
-                        <p class="my-0">Country: {{ $race['Circuit']['Location']['country'] }}</p>
-                        <p class="my-0">Locality: {{ $race['Circuit']['Location']['locality'] }}</p>
-                        <p class="my-0">Date: {{ $race['date'] }}</p>
+                        <p class="my-0"><b>Race name:</b> {{ $race['raceName'] }}</p>
+                        <p class="my-0"><b>Circuit name:</b> {{ $race['Circuit']['circuitName'] }}</p>
+                        <p class="my-0"><b>Country:</b> {{ $race['Circuit']['Location']['country'] }}</p>
+                        <p class="my-0"><b>Locality:</b> {{ $race['Circuit']['Location']['locality'] }}</p>
+                        <p class="my-0"><b>Date:</b> {{ $race['date'] }}</p>
                     </div>
                 </div>
                 <div class="col-md-6">
