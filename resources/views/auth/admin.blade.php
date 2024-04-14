@@ -1,25 +1,10 @@
 @extends('layouts.dashboard')
 
-
-
 @section('dashboard-content')
     <div class="card bg-black text-white p-2">
         <div class="card-header">Users</div>
         <div class="card-body">
             <div class=" d-flex flex-column input-group mb-3">
-                {{-- @foreach ($allusers as $user)
-                                <div class="form-group mb-3">
-                                    <form action="{{ ('update') }}" method="post">
-            <div class="d-flex flex-row">
-                <input value="{{ $user->username }}" class="">
-
-                </input>
-
-
-            </div>
-            </form>
-        </div>
-        @endforeach --}}
 
                 <table class="table table-striped table-dark">
                     <thead>
