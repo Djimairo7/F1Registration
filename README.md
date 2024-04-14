@@ -1,3 +1,4 @@
+![ICON](https://raw.githubusercontent.com/Djimairo7/F1Registration/main/public/favicon.ico)
 # Installatie
 Wij gaan er hier vanuit dat npm is geinstalleerd op het apparaat en dat er kennis is van het aanmaken van een SQL database. zo niet installeer het [hier](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 
 ## Het verkijgen van het projectbestand
