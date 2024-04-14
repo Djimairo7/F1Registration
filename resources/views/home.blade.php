@@ -31,36 +31,40 @@
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                <form class="text-center" method="POST"
-                                    action="{{ route('race.submit', ['raceName' => Str::slug($currentRace['Circuit']['circuitName'])]) }}"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <h2 class="mb-4">Tijd Toevoegen</h2>
-                                    <div class="form-group">
-                                        <input type="text" id="timeInput"
-                                            class="form-control form-control-lg bg-secondary text-white border-0 text-center"
-                                            placeholder="Gereden Tijd" name="Time" maxlength="6">
-                                        @error('Time')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="UplRaceImg"
-                                                name="UplRaceImg" hidden>
-                                            <label
-                                                class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center text-bs-gray-500"
-                                                for="UplRaceImg">
-                                                Upload Image
-                                            </label>
-                                            @error('UplRaceImg')
+                                @if (auth()->user()->profile)
+                                    <form class="text-center" method="POST"
+                                        action="{{ route('race.submit', ['raceName' => Str::slug($currentRace['Circuit']['circuitName'])]) }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <h2 class="mb-4">Tijd Toevoegen</h2>
+                                        <div class="form-group">
+                                            <input type="text" id="timeInput"
+                                                class="form-control form-control-lg bg-secondary text-white border-0 text-center"
+                                                placeholder="Gereden Tijd" name="Time" maxlength="6">
+                                            @error('Time')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen
-                                    </button>
-                                </form>
+                                        <div class="form-group mt-3">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="UplRaceImg"
+                                                    name="UplRaceImg" hidden>
+                                                <label
+                                                    class="btn custom-file-label form-control form-control-lg bg-secondary border-0 text-center text-bs-gray-500"
+                                                    for="UplRaceImg">
+                                                    Upload Image
+                                                </label>
+                                                @error('UplRaceImg')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger btn-lg btn-block mt-3">Toevoegen
+                                        </button>
+                                    </form>
+                                @else
+                                    <p>You need to create a profile before you can submit a race.</p>
+                                @endif
                             </div>
                         </div>
                     @else
